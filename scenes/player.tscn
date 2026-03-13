@@ -21,3 +21,8 @@ shape = SubResource("CapsuleShape2D_player")
 ; This marker sits to the right of the player.
 ; It flips with facing direction via code — no manual setup needed here.
 position = Vector2(22, -8)
+
+[node name="BallIndicator" type="Label" parent="."]
+position = Vector2(-8, -55)
+modulate = Color(0.95, 0.42, 0.05, 1)
+text = "●"
