@@ -1,0 +1,36 @@
+[gd_scene load_steps=5 format=3 uid="uid://basketball001"]
+
+[ext_resource type="Script" path="res://scripts/basketball.gd" id="1_ball"]
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_ball"]
+bounce = 0.80
+friction = 0.20
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_body"]
+radius = 16.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_detector"]
+; Slightly larger than the ball so the player trigger is forgiving.
+radius = 22.0
+
+[node name="Basketball" type="RigidBody2D"]
+physics_material_override = SubResource("PhysicsMaterial_ball")
+gravity_scale = 1.4
+script = ExtResource("1_ball")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_body")
+
+[node name="Visual" type="Polygon2D" parent="."]
+; 8-sided circle approximation, radius ~16. Orange ball colour.
+polygon = PackedVector2Array(0, -16, 11, -11, 16, 0, 11, 11, 0, 16, -11, 11, -16, 0, -11, -11)
+color = Color(0.95, 0.42, 0.05, 1)
+
+[node name="PlayerDetector" type="Area2D" parent="."]
+; Detects when the player lands on top of the ball.
+; Collision layer 0, mask = layer 2 (player layer).
+collision_layer = 0
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="PlayerDetector"]
+shape = SubResource("CircleShape2D_detector")

@@ -1,0 +1,23 @@
+[gd_scene load_steps=3 format=3 uid="uid://player001"]
+
+[ext_resource type="Script" path="res://scripts/player.gd" id="1_player"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_player"]
+radius = 14.0
+height = 36.0
+
+[node name="Player" type="CharacterBody2D" groups=["player"]]
+script = ExtResource("1_player")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, 0)
+shape = SubResource("CapsuleShape2D_player")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+; Placeholder orange rectangle — replace with your Bugs Bunny sprite.
+; Tint the node or swap the texture in the Inspector.
+
+[node name="ShootPoint" type="Marker2D" parent="."]
+; This marker sits to the right of the player.
+; It flips with facing direction via code — no manual setup needed here.
+position = Vector2(22, -8)

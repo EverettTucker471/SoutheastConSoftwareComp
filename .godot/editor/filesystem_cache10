@@ -1,0 +1,11 @@
+63f7b34db8d8cdea90c76aacccf841ec
+::res://::1773426766
+::res://scenes/::1773426677
+basketball.tscn::PackedScene::2424194795873080216::1773426588::0::1::::<><><>0<>0<><>::res://scripts/basketball.gd
+hoop.tscn::PackedScene::11469054888::1773426599::0::1::::<><><>0<>0<><>::res://scripts/hoop.gd
+level_1.tscn::PackedScene::584896020616::1773426677::0::1::::<><><>0<>0<><>::res://scenes/player.tscn<>res://scenes/hoop.tscn<>res://scenes/basketball.tscn
+player.tscn::PackedScene::27365761918488::1773426578::0::1::::<><><>0<>0<><>::res://scripts/player.gd
+::res://scripts/::1773426571
+basketball.gd::GDScript::6920169570941121423::1773426564::0::1::::<>RigidBody2D<><>0<>0<><>::
+hoop.gd::GDScript::6694828638852095834::1773426571::0::1::::<>Area2D<><>0<>0<><>::
+player.gd::GDScript::6225577751338377908::1773426552::0::1::::<>CharacterBody2D<><>0<>0<><>::

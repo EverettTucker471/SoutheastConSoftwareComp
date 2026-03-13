@@ -1,0 +1,31 @@
+[gd_scene load_steps=3 format=3 uid="uid://hoop001"]
+
+[ext_resource type="Script" path="res://scripts/hoop.gd" id="1_hoop"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_hoop"]
+; The trigger zone — wide enough for the player to walk into.
+size = Vector2(64, 48)
+
+[node name="Hoop" type="Area2D" groups=["hoop"]]
+script = ExtResource("1_hoop")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_hoop")
+
+[node name="Visual" type="Node2D" parent="."]
+
+[node name="Backboard" type="Polygon2D" parent="Visual"]
+; White backboard rectangle behind the rim.
+polygon = PackedVector2Array(10, -60, 50, -60, 50, -10, 10, -10)
+color = Color(1, 1, 1, 1)
+
+[node name="Rim" type="Polygon2D" parent="Visual"]
+; Orange rim bar — a flat rectangle.
+polygon = PackedVector2Array(-32, 0, 32, 0, 32, 6, -32, 6)
+color = Color(0.95, 0.42, 0.05, 1)
+
+[node name="Net" type="Line2D" parent="Visual"]
+; Simple net made of two diagonal lines.
+points = PackedVector2Array(-32, 6, -16, 40, 0, 30, 16, 40, 32, 6)
+width = 2.0
+default_color = Color(1, 1, 1, 0.9)

@@ -1,0 +1,81 @@
+[gd_scene format=3 uid="uid://level001"]
+
+[ext_resource type="PackedScene" uid="uid://player001" path="res://scenes/player.tscn" id="1_player"]
+[ext_resource type="PackedScene" uid="uid://hoop001" path="res://scenes/hoop.tscn" id="2_hoop"]
+[ext_resource type="PackedScene" uid="uid://basketball001" path="res://scenes/basketball.tscn" id="3_basketball"]
+
+[sub_resource type="RectangleShape2D" id="Shape_floor"]
+size = Vector2(1280, 40)
+
+[sub_resource type="RectangleShape2D" id="Shape_lwall"]
+size = Vector2(40, 800)
+
+[sub_resource type="RectangleShape2D" id="Shape_rwall"]
+size = Vector2(40, 800)
+
+[sub_resource type="RectangleShape2D" id="Shape_ledge"]
+size = Vector2(500, 30)
+
+[node name="Level1" type="Node2D" unique_id=115407023]
+
+[node name="Camera2D" type="Camera2D" parent="." unique_id=855597612]
+position = Vector2(640, 360)
+
+[node name="World" type="Node2D" parent="." unique_id=2070794445]
+
+[node name="Floor" type="StaticBody2D" parent="World" unique_id=1275172385]
+position = Vector2(640, 700)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="World/Floor" unique_id=1189360140]
+shape = SubResource("Shape_floor")
+
+[node name="Visual" type="Polygon2D" parent="World/Floor" unique_id=862756098]
+color = Color(0.3, 0.22, 0.12, 1)
+polygon = PackedVector2Array(-640, -20, 640, -20, 640, 20, -640, 20)
+
+[node name="LeftWall" type="StaticBody2D" parent="World" unique_id=1164320283]
+position = Vector2(-20, 340)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="World/LeftWall" unique_id=2076313347]
+shape = SubResource("Shape_lwall")
+
+[node name="Visual" type="Polygon2D" parent="World/LeftWall" unique_id=1010448800]
+color = Color(0.22, 0.22, 0.32, 1)
+polygon = PackedVector2Array(-20, -400, 20, -400, 20, 400, -20, 400)
+
+[node name="BounceWall" type="StaticBody2D" parent="World" unique_id=1788493782]
+position = Vector2(1120, 340)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="World/BounceWall" unique_id=972822010]
+shape = SubResource("Shape_rwall")
+
+[node name="Visual" type="Polygon2D" parent="World/BounceWall" unique_id=504894117]
+color = Color(0.55, 0.2, 0.2, 1)
+polygon = PackedVector2Array(-20, -400, 20, -400, 20, 400, -20, 400)
+
+[node name="HintArrow" type="Label" parent="World/BounceWall" unique_id=164554897]
+modulate = Color(1, 1, 0.5, 0.85)
+offset_left = -60.0
+offset_top = -80.0
+offset_right = -60.0
+offset_bottom = -80.0
+text = "◀  SHOOT"
+
+[node name="UpperLedge" type="StaticBody2D" parent="World" unique_id=343142134]
+position = Vector2(825, 490)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="World/UpperLedge" unique_id=1623543307]
+shape = SubResource("Shape_ledge")
+
+[node name="Visual" type="Polygon2D" parent="World/UpperLedge" unique_id=811845014]
+color = Color(0.3, 0.22, 0.12, 1)
+polygon = PackedVector2Array(-250, -15, 250, -15, 250, 15, -250, 15)
+
+[node name="Player" parent="." unique_id=1819672182 instance=ExtResource("1_player")]
+position = Vector2(200, 662)
+collision_layer = 2
+collision_mask = 5
+basketball_scene = ExtResource("3_basketball")
+
+[node name="Hoop" parent="." unique_id=1237140615 instance=ExtResource("2_hoop")]
+position = Vector2(860, 462)
