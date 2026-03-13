@@ -10,7 +10,7 @@ const GRAVITY := 980.0
 @onready var shoot_point: Marker2D = $ShootPoint
 @onready var sprite: Sprite2D = $Sprite2D
 
-var facing_right := true
+var last_direction := Vector2(1.0, 0.0)  # Track the direction the player is moving (8 directions)
 var _can_shoot := true
 const SHOOT_COOLDOWN := 0.8
 
@@ -33,13 +33,22 @@ func _handle_jump() -> void:
 
 
 func _handle_movement() -> void:
-	var dir := Input.get_axis("move_left", "move_right")
-	if dir != 0:
-		velocity.x = dir * SPEED
-		facing_right = dir > 0
-		sprite.flip_h = not facing_right
+	var dir_x := Input.get_axis("move_left", "move_right")
+	var dir_y := Input.get_axis("move_up", "move_down")
+	
+	if dir_x != 0:
+		velocity.x = dir_x * SPEED
 	else:
 		velocity.x = move_toward(velocity.x, 0.0, SPEED * 8)
+	
+	# Update sprite flip based on horizontal direction only
+	if dir_x != 0:
+		sprite.flip_h = dir_x < 0
+	
+	# Track the last movement direction (8 directions) for shooting
+	var movement := Vector2(dir_x, dir_y)
+	if movement.length() > 0:
+		last_direction = movement.normalized()
 
 
 func _input(event: InputEvent) -> void:
@@ -57,9 +66,9 @@ func _shoot_basketball() -> void:
 	get_tree().current_scene.add_child(ball)
 	ball.global_position = shoot_point.global_position
 
-	# Slight upward arc so the ball has height to bounce with.
-	var dir := Vector2(1.0 if facing_right else -1.0, -0.25).normalized()
-	ball.launch(dir * 680.0)
+	# Shoot in the direction the player is moving (8 directions)
+	var shoot_dir := last_direction * 680.0
+	ball.launch(shoot_dir)
 
 	_can_shoot = false
 	await get_tree().create_timer(SHOOT_COOLDOWN).timeout
