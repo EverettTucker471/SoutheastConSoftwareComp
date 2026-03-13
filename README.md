@@ -1,0 +1,1 @@
+Game Resolution 1280x720
