@@ -11,10 +11,22 @@ const GRAVITY := 980.0
 @onready var sprite: Sprite2D = $Sprite2D
 @onready var _ball_indicator: Label = $BallIndicator
 
-var last_direction := Vector2(1.0, 0.0)  # Track the direction the player is moving (8 directions)
-var _can_shoot := true
-const SHOOT_COOLDOWN := 0.8
+var last_direction := Vector2(1.0, 0.0)
 var _has_ball := true
+var _can_shoot := true
+const SHOOT_COOLDOWN := 0.4
+
+# Powershot charge
+var _charging := false
+var _charge_time := 0.0
+const CHARGE_THRESHOLDS := [0.0, 0.3, 0.6, 0.9]  # seconds to reach each level
+const POWER_SPEEDS    := [420.0, 640.0, 900.0, 1400.0]
+const POWER_COLORS    := [
+	Color(0.18, 0.85, 0.18),  # green
+	Color(0.95, 0.85, 0.08),  # yellow
+	Color(0.95, 0.48, 0.05),  # orange
+	Color(0.90, 0.10, 0.10),  # red
+]
 
 
 func _physics_process(delta: float) -> void:
@@ -22,6 +34,12 @@ func _physics_process(delta: float) -> void:
 	_handle_jump()
 	_handle_movement()
 	move_and_slide()
+
+
+func _process(delta: float) -> void:
+	if _charging:
+		_charge_time += delta
+		_ball_indicator.modulate = POWER_COLORS[_get_charge_level()]
 
 
 func _apply_gravity(delta: float) -> void:
@@ -58,7 +76,15 @@ func _handle_movement() -> void:
 
 
 func _input(event: InputEvent) -> void:
-	if event.is_action_pressed("shoot") and not event.is_echo() and _can_shoot and _has_ball:
+	# Start charging on press.
+	if event.is_action_pressed("shoot") and not event.is_echo() and _has_ball and _can_shoot:
+		_charging = true
+		_charge_time = 0.0
+		_ball_indicator.modulate = POWER_COLORS[0]
+
+	# Fire on release.
+	if event.is_action_released("shoot") and _charging:
+		_charging = false
 		_shoot_basketball()
 
 	if event.is_action_pressed("pickup") and not _has_ball:
@@ -68,8 +94,14 @@ func _input(event: InputEvent) -> void:
 		get_tree().reload_current_scene()
 
 
+func _get_charge_level() -> int:
+	for i in range(CHARGE_THRESHOLDS.size() - 1, -1, -1):
+		if _charge_time >= CHARGE_THRESHOLDS[i]:
+			return i
+	return 0
+
+
 func _try_pickup() -> void:
-	# Find any ball within pickup range and grab it.
 	for ball in get_tree().get_nodes_in_group("basketball"):
 		if global_position.distance_to(ball.global_position) < 50.0:
 			ball.picked_up.connect(_on_ball_picked_up)
@@ -82,14 +114,18 @@ func _shoot_basketball() -> void:
 		push_warning("Player: basketball_scene is not assigned!")
 		return
 
+	var level := _get_charge_level()
+
 	var ball: Node2D = basketball_scene.instantiate()
-	# Add to current scene so the ball is not destroyed with the player.
 	get_tree().current_scene.add_child(ball)
 	ball.global_position = shoot_point.global_position
-
-	# Shoot in the direction the player is moving (8 directions)
-	var shoot_dir := last_direction * 680.0
-	ball.launch(shoot_dir)
+	ball.set_power_level(level)
+	ball.launch(last_direction * POWER_SPEEDS[level])
+	# While the ball is immune, the player can walk through it.
+	# We disable the player's ball-layer mask instead of touching the ball's layer,
+	# so Area2D detectors (e.g. breakable wall) can still see the ball.
+	set_collision_mask_value(3, false)
+	ball.immunity_ended.connect(func(): set_collision_mask_value(3, true), CONNECT_ONE_SHOT)
 	ball.set_immune(self, 0.3)
 	ball.picked_up.connect(_on_ball_picked_up)
 
@@ -104,6 +140,9 @@ func _shoot_basketball() -> void:
 func _on_ball_picked_up() -> void:
 	_has_ball = true
 	_ball_indicator.visible = true
+	_ball_indicator.modulate = POWER_COLORS[0]
+	# Safety: restore ball-layer mask in case the ball was freed during immunity.
+	set_collision_mask_value(3, true)
 
 
 # Called by the Basketball when the player lands on it.

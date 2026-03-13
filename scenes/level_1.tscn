@@ -1,85 +1,292 @@
 [gd_scene format=3 uid="uid://level001"]
 
 [ext_resource type="PackedScene" uid="uid://player001" path="res://scenes/player.tscn" id="1_player"]
-[ext_resource type="PackedScene" uid="uid://hoop001" path="res://scenes/hoop.tscn" id="2_hoop"]
-[ext_resource type="Texture2D" uid="uid://bap5rnsgcqw02" path="res://Platformer Art Complete Pack/Extra animations and enemies/Alien sprites/alienPink.png" id="3_5xbjy"]
+[ext_resource type="Texture2D" uid="uid://bap5rnsgcqw02" path="res://Platformer Art Complete Pack/Extra animations and enemies/Alien sprites/alienPink.png" id="2_alien"]
 [ext_resource type="PackedScene" uid="uid://basketball001" path="res://scenes/basketball.tscn" id="3_basketball"]
+[ext_resource type="Script" path="res://scripts/level_1.gd" id="4_level"]
+[ext_resource type="Script" path="res://scripts/breakable_wall.gd" id="5_bwall"]
 
 [sub_resource type="RectangleShape2D" id="Shape_floor"]
 size = Vector2(1280, 40)
 
 [sub_resource type="RectangleShape2D" id="Shape_lwall"]
-size = Vector2(40, 800)
+size = Vector2(40, 1100)
 
 [sub_resource type="RectangleShape2D" id="Shape_rwall"]
-size = Vector2(40, 800)
+size = Vector2(40, 1100)
 
-[sub_resource type="RectangleShape2D" id="Shape_ledge"]
-size = Vector2(500, 30)
+[sub_resource type="RectangleShape2D" id="Shape_ceiling"]
+size = Vector2(1280, 40)
 
-[node name="Level1" type="Node2D" unique_id=115407023]
+[sub_resource type="RectangleShape2D" id="Shape_platA"]
+size = Vector2(380, 20)
 
-[node name="Camera2D" type="Camera2D" parent="." unique_id=855597612]
-position = Vector2(640, 360)
+[sub_resource type="RectangleShape2D" id="Shape_platB"]
+size = Vector2(420, 20)
 
-[node name="World" type="Node2D" parent="." unique_id=2070794445]
+[sub_resource type="RectangleShape2D" id="Shape_bwall"]
+size = Vector2(20, 122)
 
-[node name="Floor" type="StaticBody2D" parent="World" unique_id=1275172385]
-position = Vector2(640, 700)
+[sub_resource type="RectangleShape2D" id="Shape_bwall_detector"]
+size = Vector2(48, 130)
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="World/Floor" unique_id=1189360140]
+[sub_resource type="RectangleShape2D" id="Shape_room_floor"]
+size = Vector2(222, 20)
+
+[sub_resource type="RectangleShape2D" id="Shape_room_ceil"]
+size = Vector2(242, 20)
+
+[sub_resource type="RectangleShape2D" id="Shape_platC"]
+size = Vector2(360, 20)
+
+[sub_resource type="RectangleShape2D" id="Shape_platD"]
+size = Vector2(360, 20)
+
+[sub_resource type="RectangleShape2D" id="Shape_goal_plat"]
+size = Vector2(520, 20)
+
+[sub_resource type="RectangleShape2D" id="Shape_goal_area"]
+size = Vector2(520, 100)
+
+[node name="Level1" type="Node2D"]
+script = ExtResource("4_level")
+
+[node name="World" type="Node2D" parent="."]
+
+; ── Floor ────────────────────────────────────────────────────
+[node name="Floor" type="StaticBody2D" parent="World"]
+collision_layer = 1
+position = Vector2(640, 740)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="World/Floor"]
 shape = SubResource("Shape_floor")
 
-[node name="Visual" type="Polygon2D" parent="World/Floor" unique_id=862756098]
+[node name="Visual" type="Polygon2D" parent="World/Floor"]
 color = Color(0.3, 0.22, 0.12, 1)
 polygon = PackedVector2Array(-640, -20, 640, -20, 640, 20, -640, 20)
 
-[node name="LeftWall" type="StaticBody2D" parent="World" unique_id=1164320283]
-position = Vector2(-20, 340)
+; ── Left wall ─────────────────────────────────────────────────
+[node name="LeftWall" type="StaticBody2D" parent="World"]
+collision_layer = 1
+position = Vector2(-20, 230)
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="World/LeftWall" unique_id=2076313347]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="World/LeftWall"]
 shape = SubResource("Shape_lwall")
 
-[node name="Visual" type="Polygon2D" parent="World/LeftWall" unique_id=1010448800]
+[node name="Visual" type="Polygon2D" parent="World/LeftWall"]
 color = Color(0.22, 0.22, 0.32, 1)
-polygon = PackedVector2Array(-20, -400, 20, -400, 20, 400, -20, 400)
+polygon = PackedVector2Array(-20, -550, 20, -550, 20, 550, -20, 550)
 
-[node name="BounceWall" type="StaticBody2D" parent="World" unique_id=1788493782]
-position = Vector2(1120, 340)
+; ── Right (bounce) wall ───────────────────────────────────────
+[node name="BounceWall" type="StaticBody2D" parent="World"]
+collision_layer = 1
+position = Vector2(1120, 230)
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="World/BounceWall" unique_id=972822010]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="World/BounceWall"]
 shape = SubResource("Shape_rwall")
 
-[node name="Visual" type="Polygon2D" parent="World/BounceWall" unique_id=504894117]
+[node name="Visual" type="Polygon2D" parent="World/BounceWall"]
 color = Color(0.55, 0.2, 0.2, 1)
-polygon = PackedVector2Array(-20, -400, 20, -400, 20, 400, -20, 400)
+polygon = PackedVector2Array(-20, -550, 20, -550, 20, 550, -20, 550)
 
-[node name="HintArrow" type="Label" parent="World/BounceWall" unique_id=164554897]
+[node name="HintArrow" type="Label" parent="World/BounceWall"]
 modulate = Color(1, 1, 0.5, 0.85)
-offset_left = -60.0
-offset_top = -80.0
-offset_right = -60.0
-offset_bottom = -80.0
+position = Vector2(-80, 120)
 text = "◀  SHOOT"
 
-[node name="UpperLedge" type="StaticBody2D" parent="World" unique_id=343142134]
-position = Vector2(825, 490)
+; ── Ceiling ───────────────────────────────────────────────────
+[node name="Ceiling" type="StaticBody2D" parent="World"]
+collision_layer = 1
+position = Vector2(640, -320)
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="World/UpperLedge" unique_id=1623543307]
-shape = SubResource("Shape_ledge")
+[node name="CollisionShape2D" type="CollisionShape2D" parent="World/Ceiling"]
+shape = SubResource("Shape_ceiling")
 
-[node name="Visual" type="Polygon2D" parent="World/UpperLedge" unique_id=811845014]
-color = Color(0.3, 0.22, 0.12, 1)
-polygon = PackedVector2Array(-250, -15, 250, -15, 250, 15, -250, 15)
+[node name="Visual" type="Polygon2D" parent="World/Ceiling"]
+color = Color(0.22, 0.22, 0.32, 1)
+polygon = PackedVector2Array(-640, -20, 640, -20, 640, 20, -640, 20)
 
-[node name="Player" parent="." unique_id=1819672182 instance=ExtResource("1_player")]
-position = Vector2(200, 662)
+; ── Platform A — reachable with a normal jump from the floor ──
+; Surface y=600, left side (x=20–400). First step up.
+[node name="PlatformA" type="StaticBody2D" parent="World"]
+collision_layer = 1
+position = Vector2(210, 610)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="World/PlatformA"]
+shape = SubResource("Shape_platA")
+
+[node name="Visual" type="Polygon2D" parent="World/PlatformA"]
+color = Color(0.35, 0.26, 0.14, 1)
+polygon = PackedVector2Array(-190, -10, 190, -10, 190, 10, -190, 10)
+
+; ── Platform B — requires ball bounce from Platform A ─────────
+; Surface y=420, right side (x=450–870). Extended to reach breakable wall.
+[node name="PlatformB" type="StaticBody2D" parent="World"]
+collision_layer = 1
+position = Vector2(660, 430)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="World/PlatformB"]
+shape = SubResource("Shape_platB")
+
+[node name="Visual" type="Polygon2D" parent="World/PlatformB"]
+color = Color(0.32, 0.24, 0.14, 1)
+polygon = PackedVector2Array(-210, -10, 210, -10, 210, 10, -210, 10)
+
+; ── Breakable wall — only red ball passes through ─────────────
+; Sits at right edge of Platform B (x≈868), y=300–422.
+; Orange with cracks visual. Add "breakable_wall" group via script.
+[node name="BreakableWall" type="StaticBody2D" parent="World"]
+collision_layer = 1
+position = Vector2(868, 361)
+script = ExtResource("5_bwall")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="World/BreakableWall"]
+shape = SubResource("Shape_bwall")
+
+[node name="Visual" type="Polygon2D" parent="World/BreakableWall"]
+color = Color(0.85, 0.42, 0.08, 1)
+polygon = PackedVector2Array(-10, -61, 10, -61, 10, 61, -10, 61)
+
+[node name="HintLabel" type="Label" parent="World/BreakableWall"]
+modulate = Color(1, 0.9, 0.3, 1)
+position = Vector2(-52, -85)
+text = "🔴 RED ONLY"
+
+[node name="BallDetector" type="Area2D" parent="World/BreakableWall"]
+collision_layer = 0
+collision_mask = 4
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="World/BreakableWall/BallDetector"]
+shape = SubResource("Shape_bwall_detector")
+
+; ── Hidden room — accessible only through the breakable wall ──
+; Room: x=878–1100, y=300–420. Same floor height as Platform B.
+[node name="RoomFloor" type="StaticBody2D" parent="World"]
+collision_layer = 1
+position = Vector2(989, 430)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="World/RoomFloor"]
+shape = SubResource("Shape_room_floor")
+
+[node name="Visual" type="Polygon2D" parent="World/RoomFloor"]
+color = Color(0.28, 0.20, 0.30, 1)
+polygon = PackedVector2Array(-111, -10, 111, -10, 111, 10, -111, 10)
+
+[node name="RoomCeiling" type="StaticBody2D" parent="World"]
+collision_layer = 1
+position = Vector2(979, 290)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="World/RoomCeiling"]
+shape = SubResource("Shape_room_ceil")
+
+[node name="Visual" type="Polygon2D" parent="World/RoomCeiling"]
+color = Color(0.28, 0.20, 0.30, 1)
+polygon = PackedVector2Array(-121, -10, 121, -10, 121, 10, -121, 10)
+
+; ── Platform C — requires ball bounce from Platform B ─────────
+; Surface y=250, left side (x=20–380).
+[node name="PlatformC" type="StaticBody2D" parent="World"]
+collision_layer = 1
+position = Vector2(200, 260)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="World/PlatformC"]
+shape = SubResource("Shape_platC")
+
+[node name="Visual" type="Polygon2D" parent="World/PlatformC"]
+color = Color(0.28, 0.22, 0.16, 1)
+polygon = PackedVector2Array(-180, -10, 180, -10, 180, 10, -180, 10)
+
+; ── Platform D — requires ball bounce from Platform C ─────────
+; Surface y=80, right side (x=450–810).
+[node name="PlatformD" type="StaticBody2D" parent="World"]
+collision_layer = 1
+position = Vector2(630, 90)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="World/PlatformD"]
+shape = SubResource("Shape_platD")
+
+[node name="Visual" type="Polygon2D" parent="World/PlatformD"]
+color = Color(0.24, 0.20, 0.18, 1)
+polygon = PackedVector2Array(-180, -10, 180, -10, 180, 10, -180, 10)
+
+; ── Goal Platform — requires ball bounce from Platform D ──────
+; Surface y=-80, center (x=200–720). Gold colour to signal finish.
+[node name="GoalPlatform" type="StaticBody2D" parent="World"]
+collision_layer = 1
+position = Vector2(460, -70)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="World/GoalPlatform"]
+shape = SubResource("Shape_goal_plat")
+
+[node name="Visual" type="Polygon2D" parent="World/GoalPlatform"]
+color = Color(0.85, 0.72, 0.08, 1)
+polygon = PackedVector2Array(-260, -10, 260, -10, 260, 10, -260, 10)
+
+[node name="FinishLabel" type="Label" parent="World/GoalPlatform"]
+modulate = Color(1, 0.95, 0.2, 1)
+position = Vector2(-80, -40)
+text = "★  FINISH  ★"
+
+; ── Ball pickups — one on every platform that needs a bounce ──
+; Placed slightly above the surface so the RigidBody2D settles on it.
+[node name="BallOnPlatA" parent="." instance=ExtResource("3_basketball")]
+position = Vector2(70, 582)
+
+[node name="BallOnPlatB" parent="." instance=ExtResource("3_basketball")]
+position = Vector2(480, 402)
+
+[node name="BallOnPlatC" parent="." instance=ExtResource("3_basketball")]
+position = Vector2(70, 232)
+
+[node name="BallOnPlatD" parent="." instance=ExtResource("3_basketball")]
+position = Vector2(470, 62)
+
+; ── Goal trigger area ─────────────────────────────────────────
+[node name="GoalArea" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 2
+position = Vector2(460, -130)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="GoalArea"]
+shape = SubResource("Shape_goal_area")
+
+; ── Player ────────────────────────────────────────────────────
+[node name="Player" parent="." instance=ExtResource("1_player")]
+position = Vector2(200, 688)
 collision_layer = 2
 collision_mask = 5
 basketball_scene = ExtResource("3_basketball")
 
-[node name="Sprite2D2" type="Sprite2D" parent="Player" unique_id=1643330750]
-texture = ExtResource("3_5xbjy")
+[node name="Sprite2D2" type="Sprite2D" parent="Player"]
+texture = ExtResource("2_alien")
 
-[node name="Hoop" parent="." unique_id=1237140615 instance=ExtResource("2_hoop")]
-position = Vector2(860, 462)
+; Camera follows the player — positioned 120px above center so
+; the player can see what's above them while climbing.
+[node name="Camera2D" type="Camera2D" parent="Player"]
+position = Vector2(0, -120)
+
+; ── Win screen ────────────────────────────────────────────────
+[node name="WinScreen" type="CanvasLayer" parent="."]
+
+[node name="Background" type="ColorRect" parent="WinScreen"]
+color = Color(0, 0, 0, 0.78)
+offset_right = 1280.0
+offset_bottom = 720.0
+
+[node name="WinLabel" type="Label" parent="WinScreen"]
+offset_left = 340.0
+offset_top = 260.0
+offset_right = 940.0
+offset_bottom = 370.0
+horizontal_alignment = 1
+text = "YOU WIN!"
+theme_override_font_sizes/font_size = 80
+
+[node name="HintLabel" type="Label" parent="WinScreen"]
+offset_left = 340.0
+offset_top = 390.0
+offset_right = 940.0
+offset_bottom = 440.0
+horizontal_alignment = 1
+text = "Press R to restart"
+theme_override_font_sizes/font_size = 28
