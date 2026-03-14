@@ -5,20 +5,35 @@ signal level_complete
 
 # Path to the next level — leave empty to just show the complete screen.
 @export var next_level: String = ""
+# Optional node path to an elevator pad to trigger instead of transitioning.
+@export var elevator_pad_path: NodePath = NodePath()
+
+var elevator_pad: Node2D
 
 
 func _ready() -> void:
 	body_entered.connect(_on_body_entered)
+	
+	# Resolve the NodePath to an actual node reference
+	if elevator_pad_path != NodePath():
+		elevator_pad = get_node(elevator_pad_path)
 
 
 func _on_body_entered(body: Node) -> void:
-	if not body.is_in_group("player"):
+	# Only trigger for the basketball (RigidBody2D from basketball.tscn)
+	if body.get_script() == null or body.get_script().resource_path != "res://scripts/basketball.gd":
 		return
 
-	print("=== LEVEL COMPLETE! ===")
+	print("=== BASKETBALL IN HOOP! ===")
 	emit_signal("level_complete")
 
-	# Freeze the game briefly, then transition.
+	# If there's an elevator pad, trigger it instead of transitioning levels.
+	if elevator_pad != null:
+		await get_tree().create_timer(0.5).timeout  # Wait for ball to settle
+		elevator_pad.rise_up()
+		return
+
+	# Freeze the game brawiefly, then transition.
 	get_tree().paused = true
 	await get_tree().create_timer(1.5, true).timeout
 	get_tree().paused = false

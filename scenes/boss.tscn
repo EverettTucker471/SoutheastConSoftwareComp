@@ -1,0 +1,39 @@
+[gd_scene format=3 uid="uid://ga3sc5j4g8u6"]
+
+[ext_resource type="Script" uid="uid://dum77xfwuddyr" path="res://scripts/boss.gd" id="1_dlmty"]
+[ext_resource type="Texture2D" uid="uid://cbr4yq35p7ura" path="res://Platformer Art Complete Pack/Base pack/Enemies/blockerMad.png" id="2_neq0i"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_neq0i"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_neq0i")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 5.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_xd8r6"]
+size = Vector2(48, 49)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_dlmty"]
+size = Vector2(43.333332, 43.333332)
+
+[node name="Boss" type="CharacterBody2D" unique_id=551981438]
+script = ExtResource("1_dlmty")
+
+[node name="BossSprite" type="AnimatedSprite2D" parent="." unique_id=1846423672]
+sprite_frames = SubResource("SpriteFrames_neq0i")
+animation = &"idle"
+
+[node name="BossBoundary" type="CollisionShape2D" parent="." unique_id=1115133377]
+position = Vector2(0, -0.5)
+shape = SubResource("RectangleShape2D_xd8r6")
+
+[node name="BossHitbox" type="Area2D" parent="." unique_id=1770507440]
+
+[node name="BossHitboxShape" type="CollisionShape2D" parent="BossHitbox" unique_id=1758291960]
+position = Vector2(4.7683716e-07, 4.7683716e-07)
+scale = Vector2(1.2, 1.2)
+shape = SubResource("RectangleShape2D_dlmty")

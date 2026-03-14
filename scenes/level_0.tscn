@@ -1,0 +1,90 @@
+[gd_scene format=3 uid="uid://level000"]
+
+[ext_resource type="PackedScene" uid="uid://player001" path="res://scenes/player.tscn" id="1_player"]
+[ext_resource type="PackedScene" uid="uid://hoop001" path="res://scenes/hoop.tscn" id="2_hoop"]
+[ext_resource type="PackedScene" uid="uid://elevator001" path="res://scenes/elevator.tscn" id="4_elevator"]
+[ext_resource type="Script" uid="uid://dapouxcup67cy" path="res://scripts/level_transition.gd" id="7_qjcqe"]
+[ext_resource type="Script" uid="uid://db30oj10lk31p" path="res://scripts/elevator.gd" id="7_rhhhf"]
+
+[sub_resource type="RectangleShape2D" id="Shape_floor"]
+size = Vector2(1280, 40)
+
+[sub_resource type="RectangleShape2D" id="Shape_lwall"]
+size = Vector2(40, 800)
+
+[sub_resource type="RectangleShape2D" id="Shape_rwall"]
+size = Vector2(40, 800)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_jv3i5"]
+size = Vector2(1280, 41)
+
+[node name="Level0" type="Node2D" unique_id=115407023]
+
+[node name="Camera2D" type="Camera2D" parent="." unique_id=855597612]
+position = Vector2(640, 360)
+
+[node name="World" type="Node2D" parent="." unique_id=2070794445]
+
+[node name="CourtBackground" type="Polygon2D" parent="World" unique_id=1]
+color = Color(0.9, 0.7, 0.2, 1)
+polygon = PackedVector2Array(0, 0, 1280, 0, 1280, 650, 0, 650)
+
+[node name="CourtLines" type="Line2D" parent="World" unique_id=2]
+points = PackedVector2Array(640, 0, 640, 650)
+width = 3.0
+default_color = Color(1, 1, 1, 0.8)
+
+[node name="CourtCenter" type="Line2D" parent="World" unique_id=3]
+points = PackedVector2Array(300, 200, 980, 200)
+width = 2.0
+default_color = Color(1, 1, 1, 0.6)
+
+[node name="Floor" type="StaticBody2D" parent="World" unique_id=1275172385]
+position = Vector2(640, 700)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="World/Floor" unique_id=1189360140]
+shape = SubResource("Shape_floor")
+
+[node name="Visual" type="Polygon2D" parent="World/Floor" unique_id=862756098]
+color = Color(0.3, 0.22, 0.12, 1)
+polygon = PackedVector2Array(-640, -20, 640, -20, 640, 20, -640, 20)
+
+[node name="LeftWall" type="StaticBody2D" parent="World" unique_id=1164320283]
+position = Vector2(-20, 340)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="World/LeftWall" unique_id=2076313347]
+shape = SubResource("Shape_lwall")
+
+[node name="Visual" type="Polygon2D" parent="World/LeftWall" unique_id=1010448800]
+color = Color(0.22, 0.22, 0.32, 1)
+polygon = PackedVector2Array(-20, -400, 20, -400, 20, 400, -20, 400)
+
+[node name="RightWall" type="StaticBody2D" parent="World" unique_id=1788493782]
+position = Vector2(1300, 340)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="World/RightWall" unique_id=972822010]
+shape = SubResource("Shape_rwall")
+
+[node name="Visual" type="Polygon2D" parent="World/RightWall" unique_id=504894117]
+color = Color(0.22, 0.22, 0.32, 1)
+polygon = PackedVector2Array(-20, -400, 20, -400, 20, 400, -20, 400)
+
+[node name="Hoop" parent="." unique_id=1237140615 instance=ExtResource("2_hoop")]
+position = Vector2(1034, 431)
+elevator_pad_path = NodePath("../Elevator")
+
+[node name="Elevator" parent="." unique_id=574230044 instance=ExtResource("4_elevator")]
+script = ExtResource("7_rhhhf")
+
+[node name="Player" parent="." unique_id=1554639981 instance=ExtResource("1_player")]
+position = Vector2(250, 575)
+scale = Vector2(5, 5)
+
+[node name="LevelTransition" type="Area2D" parent="." unique_id=1028068281]
+collision_mask = 2
+script = ExtResource("7_qjcqe")
+next_scene_path = "uid://level001"
+
+[node name="TransitionHitbox" type="CollisionShape2D" parent="LevelTransition" unique_id=1543723965]
+position = Vector2(640, -54.5)
+shape = SubResource("RectangleShape2D_jv3i5")

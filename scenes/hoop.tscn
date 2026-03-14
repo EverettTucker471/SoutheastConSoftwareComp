@@ -8,6 +8,8 @@ size = Vector2(64, 48)
 
 [node name="Hoop" type="Area2D" groups=["hoop"]]
 script = ExtResource("1_hoop")
+collision_layer = 1
+collision_mask = 5
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("RectangleShape2D_hoop")

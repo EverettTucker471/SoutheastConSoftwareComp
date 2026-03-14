@@ -1,36 +1,38 @@
-[gd_scene load_steps=5 format=3 uid="uid://basketball001"]
+[gd_scene format=3 uid="uid://basketball001"]
 
-[ext_resource type="Script" path="res://scripts/basketball.gd" id="1_ball"]
+[ext_resource type="Script" uid="uid://c5uggge3p4y7x" path="res://scripts/basketball.gd" id="1_ball"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_ball"]
-bounce = 0.80
-friction = 0.20
+friction = 0.2
+bounce = 0.8
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_body"]
 radius = 16.0
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_detector"]
-; Slightly larger than the ball so the player trigger is forgiving.
 radius = 22.0
 
-[node name="Basketball" type="RigidBody2D"]
+[node name="Basketball" type="RigidBody2D" unique_id=1873625036]
+collision_layer = 3
 physics_material_override = SubResource("PhysicsMaterial_ball")
 gravity_scale = 1.4
+contact_monitor = true
+max_contacts_reported = 4
 script = ExtResource("1_ball")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=82718581]
+scale = Vector2(1.5, 1.5)
 shape = SubResource("CircleShape2D_body")
 
-[node name="Visual" type="Polygon2D" parent="."]
-; 8-sided circle approximation, radius ~16. Orange ball colour.
-polygon = PackedVector2Array(0, -16, 11, -11, 16, 0, 11, 11, 0, 16, -11, 11, -16, 0, -11, -11)
+[node name="Visual" type="Polygon2D" parent="." unique_id=1843747206]
+scale = Vector2(1.5, 1.5)
 color = Color(0.95, 0.42, 0.05, 1)
+polygon = PackedVector2Array(0, -16, 11, -11, 16, 0, 11, 11, 0, 16, -11, 11, -16, 0, -11, -11)
 
-[node name="PlayerDetector" type="Area2D" parent="."]
-; Detects when the player lands on top of the ball.
-; Collision layer 0, mask = layer 2 (player layer).
+[node name="PlayerDetector" type="Area2D" parent="." unique_id=420346214]
+scale = Vector2(1.5, 1.5)
 collision_layer = 0
 collision_mask = 2
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="PlayerDetector"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="PlayerDetector" unique_id=1942638600]
 shape = SubResource("CircleShape2D_detector")
