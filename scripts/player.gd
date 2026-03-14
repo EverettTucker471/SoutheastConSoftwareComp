@@ -8,7 +8,7 @@ const GRAVITY := 980.0
 @export var basketball_scene: PackedScene
 
 @onready var shoot_point: Marker2D = $ShootPoint
-@onready var sprite: Sprite2D = $Sprite2D
+@onready var sprite: AnimatedSprite2D = $PlayerSprite
 @onready var _ball_indicator: Label = $BallIndicator
 
 var last_direction := Vector2(1.0, 0.0)
@@ -33,6 +33,7 @@ func _physics_process(delta: float) -> void:
 	_apply_gravity(delta)
 	_handle_jump()
 	_handle_movement()
+	_handle_animations()
 	move_and_slide()
 
 
@@ -52,6 +53,24 @@ func _handle_jump() -> void:
 		velocity.y = JUMP_VELOCITY
 
 
+func _handle_animations() -> void:
+	var dir_x := Input.get_axis("move_left", "move_right")
+
+	# Flip sprite based on lateral movement direction
+	if dir_x != 0:
+		sprite.flip_h = dir_x < 0
+	
+	# Determining animation based on priority
+	if _charging:
+		sprite.play("shooting")
+	elif not is_on_floor():
+		sprite.play("jumping")
+	elif dir_x != 0:
+		sprite.play("running")
+	else:
+		sprite.play("idle")
+
+
 func _handle_movement() -> void:
 	var dir_x := Input.get_axis("move_left", "move_right")
 	var dir_y := Input.get_axis("move_up", "move_down")
@@ -60,10 +79,6 @@ func _handle_movement() -> void:
 		velocity.x = dir_x * SPEED
 	else:
 		velocity.x = move_toward(velocity.x, 0.0, SPEED * 8)
-
-	# Update sprite flip based on horizontal direction only
-	if dir_x != 0:
-		sprite.flip_h = dir_x < 0
 
 	# Arrow keys set aim direction without moving the player.
 	var aim_x := Input.get_axis("aim_left", "aim_right")
@@ -81,6 +96,7 @@ func _input(event: InputEvent) -> void:
 		_charging = true
 		_charge_time = 0.0
 		_ball_indicator.modulate = POWER_COLORS[0]
+		sprite.play("shooting")
 
 	# Fire on release.
 	if event.is_action_released("shoot") and _charging:
@@ -103,7 +119,7 @@ func _get_charge_level() -> int:
 
 func _try_pickup() -> void:
 	for ball in get_tree().get_nodes_in_group("basketball"):
-		if global_position.distance_to(ball.global_position) < 50.0:
+		if global_position.distance_to(ball.global_position) < 75.0:
 			ball.picked_up.connect(_on_ball_picked_up)
 			ball.try_pickup()
 			return
