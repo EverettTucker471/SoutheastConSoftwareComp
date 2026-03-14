@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://d2ipjlpmnprvm"]
 
 [ext_resource type="PackedScene" uid="uid://player001" path="res://scenes/player.tscn" id="1_jm1iu"]
+[ext_resource type="Script" uid="uid://caeuxtwea5lv3" path="res://scripts/level_2.gd" id="1_pbc48"]
 [ext_resource type="PackedScene" uid="uid://ga3sc5j4g8u6" path="res://scenes/boss.tscn" id="3_pbc48"]
 
 [sub_resource type="RectangleShape2D" id="Shape_floor"]
@@ -19,6 +20,7 @@ size = Vector2(280, 20)
 size = Vector2(360, 20)
 
 [node name="Level2" type="Node2D" unique_id=1005384430]
+script = ExtResource("1_pbc48")
 
 [node name="World" type="Node2D" parent="." unique_id=1817203255]
 
@@ -99,3 +101,28 @@ scale = Vector2(3, 3)
 [node name="Boss" parent="." unique_id=551981438 instance=ExtResource("3_pbc48")]
 position = Vector2(639, 297)
 scale = Vector2(2.5, 2.5)
+
+[node name="WinScreen" type="CanvasLayer" parent="." unique_id=1976202130]
+
+[node name="Background" type="ColorRect" parent="WinScreen" unique_id=2016261283]
+offset_right = 1280.0
+offset_bottom = 720.0
+color = Color(0, 0, 0, 0.78)
+
+[node name="WinLabel" type="Label" parent="WinScreen" unique_id=1755509194]
+offset_left = 340.0
+offset_top = 260.0
+offset_right = 940.0
+offset_bottom = 370.0
+theme_override_font_sizes/font_size = 80
+text = "YOU WIN!"
+horizontal_alignment = 1
+
+[node name="HintLabel" type="Label" parent="WinScreen" unique_id=1182729414]
+offset_left = 340.0
+offset_top = 390.0
+offset_right = 940.0
+offset_bottom = 440.0
+theme_override_font_sizes/font_size = 28
+text = "Press SPACE to restart"
+horizontal_alignment = 1

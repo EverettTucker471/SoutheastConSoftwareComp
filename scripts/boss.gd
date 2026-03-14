@@ -1,5 +1,7 @@
 extends CharacterBody2D
 
+signal boss_defeated
+
 @export var max_health: float = 100.0
 @export var damage_multiplier: float = 0.05 
 
@@ -98,4 +100,5 @@ func take_damage(amount: float) -> void:
 
 func die() -> void:
 	print("Boss Defeated!")
+	boss_defeated.emit()
 	queue_free()
