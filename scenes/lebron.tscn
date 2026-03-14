@@ -1,0 +1,18 @@
+[gd_scene format=3 uid="uid://c2epcm4lrm45n"]
+
+[ext_resource type="Texture2D" uid="uid://c62v6q4nklyii" path="res://assets/lebron.jpeg" id="1_k8e3y"]
+[ext_resource type="Script" uid="uid://trosshxr2ddt" path="res://scripts/lebron_goal.gd" id="1_wjm7f"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_o6bqf"]
+size = Vector2(20, 26)
+
+[node name="LebronGoal" type="Area2D" unique_id=1344934126]
+collision_mask = 2
+script = ExtResource("1_wjm7f")
+
+[node name="LebronHitbox" type="CollisionShape2D" parent="." unique_id=1682228585]
+shape = SubResource("RectangleShape2D_o6bqf")
+
+[node name="LebronSprite" type="Sprite2D" parent="." unique_id=69620780]
+scale = Vector2(0.1, 0.1)
+texture = ExtResource("1_k8e3y")
