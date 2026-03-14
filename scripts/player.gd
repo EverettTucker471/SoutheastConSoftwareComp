@@ -119,7 +119,7 @@ func _get_charge_level() -> int:
 
 func _try_pickup() -> void:
 	for ball in get_tree().get_nodes_in_group("basketball"):
-		if global_position.distance_to(ball.global_position) < 75.0:
+		if global_position.distance_to(ball.global_position) < 100.0:
 			ball.picked_up.connect(_on_ball_picked_up)
 			ball.try_pickup()
 			return
