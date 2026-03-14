@@ -4,7 +4,6 @@
 [ext_resource type="PackedScene" uid="uid://hoop001" path="res://scenes/hoop.tscn" id="2_hoop"]
 [ext_resource type="PackedScene" uid="uid://basketball001" path="res://scenes/basketball.tscn" id="3_basketball"]
 [ext_resource type="PackedScene" uid="uid://elevator001" path="res://scenes/elevator.tscn" id="4_elevator"]
-[ext_resource type="Texture2D" uid="uid://bap5rnsgcqw02" path="res://Platformer Art Complete Pack/Extra animations and enemies/Alien sprites/alienPink.png" id="5_alien"]
 [ext_resource type="PackedScene" uid="uid://ga3sc5j4g8u6" path="res://scenes/boss.tscn" id="6_xp8tn"]
 [ext_resource type="Script" uid="uid://db30oj10lk31p" path="res://scripts/elevator.gd" id="7_rhhhf"]
 
@@ -68,15 +67,6 @@ shape = SubResource("Shape_rwall")
 color = Color(0.22, 0.22, 0.32, 1)
 polygon = PackedVector2Array(-20, -400, 20, -400, 20, 400, -20, 400)
 
-[node name="Player" parent="." unique_id=1819672182 instance=ExtResource("1_player")]
-position = Vector2(200, 662)
-collision_layer = 2
-collision_mask = 5
-basketball_scene = ExtResource("3_basketball")
-
-[node name="Sprite2D2" type="Sprite2D" parent="Player" unique_id=1356682995]
-texture = ExtResource("5_alien")
-
 [node name="Hoop" parent="." unique_id=1237140615 instance=ExtResource("2_hoop")]
 position = Vector2(1034, 431)
 elevator_pad_path = NodePath("../Elevator")
@@ -87,3 +77,8 @@ scale = Vector2(3, 3)
 
 [node name="Elevator" parent="." unique_id=574230044 instance=ExtResource("4_elevator")]
 script = ExtResource("7_rhhhf")
+
+[node name="Player" parent="." unique_id=1554639981 instance=ExtResource("1_player")]
+position = Vector2(250, 575)
+scale = Vector2(5, 5)
+basketball_scene = ExtResource("3_basketball")
