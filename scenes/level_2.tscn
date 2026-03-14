@@ -3,6 +3,7 @@
 [ext_resource type="PackedScene" uid="uid://player001" path="res://scenes/player.tscn" id="1_jm1iu"]
 [ext_resource type="Script" uid="uid://caeuxtwea5lv3" path="res://scripts/level_2.gd" id="1_pbc48"]
 [ext_resource type="PackedScene" uid="uid://ga3sc5j4g8u6" path="res://scenes/boss.tscn" id="3_pbc48"]
+[ext_resource type="PackedScene" uid="uid://c2epcm4lrm45n" path="res://scenes/lebron.tscn" id="4_eqxsl"]
 
 [sub_resource type="RectangleShape2D" id="Shape_floor"]
 size = Vector2(1360, 40)
@@ -103,6 +104,7 @@ position = Vector2(639, 297)
 scale = Vector2(2.5, 2.5)
 
 [node name="WinScreen" type="CanvasLayer" parent="." unique_id=1976202130]
+visible = false
 
 [node name="Background" type="ColorRect" parent="WinScreen" unique_id=2016261283]
 offset_right = 1280.0
@@ -115,7 +117,7 @@ offset_top = 260.0
 offset_right = 940.0
 offset_bottom = 370.0
 theme_override_font_sizes/font_size = 80
-text = "YOU WIN!"
+text = "YOU SAVED LEBRON!"
 horizontal_alignment = 1
 
 [node name="HintLabel" type="Label" parent="WinScreen" unique_id=1182729414]
@@ -124,5 +126,9 @@ offset_top = 390.0
 offset_right = 940.0
 offset_bottom = 440.0
 theme_override_font_sizes/font_size = 28
-text = "Press SPACE to restart"
+text = "Press SPACE to play again"
 horizontal_alignment = 1
+
+[node name="LebronGoal" parent="." unique_id=1344934126 instance=ExtResource("4_eqxsl")]
+position = Vector2(637, 331)
+scale = Vector2(4, 4)
