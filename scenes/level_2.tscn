@@ -1,0 +1,103 @@
+[gd_scene format=3 uid="uid://d2ipjlpmnprvm"]
+
+[ext_resource type="PackedScene" uid="uid://player001" path="res://scenes/player.tscn" id="1_jm1iu"]
+[ext_resource type="PackedScene" uid="uid://basketball001" path="res://scenes/basketball.tscn" id="2_pbc48"]
+[ext_resource type="PackedScene" uid="uid://ga3sc5j4g8u6" path="res://scenes/boss.tscn" id="3_pbc48"]
+
+[sub_resource type="RectangleShape2D" id="Shape_floor"]
+size = Vector2(1360, 40)
+
+[sub_resource type="RectangleShape2D" id="Shape_wall"]
+size = Vector2(40, 1200)
+
+[sub_resource type="RectangleShape2D" id="Shape_ceiling"]
+size = Vector2(1360, 40)
+
+[sub_resource type="RectangleShape2D" id="Shape_plat_side"]
+size = Vector2(280, 20)
+
+[sub_resource type="RectangleShape2D" id="Shape_plat_center"]
+size = Vector2(360, 20)
+
+[node name="Level2" type="Node2D" unique_id=1005384430]
+
+[node name="World" type="Node2D" parent="." unique_id=1817203255]
+
+[node name="Floor" type="StaticBody2D" parent="World" unique_id=167307976]
+position = Vector2(640, 740)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="World/Floor" unique_id=1270848552]
+shape = SubResource("Shape_floor")
+
+[node name="Visual" type="Polygon2D" parent="World/Floor" unique_id=674094361]
+color = Color(0.3, 0.22, 0.12, 1)
+polygon = PackedVector2Array(-680, -20, 680, -20, 680, 20, -680, 20)
+
+[node name="LeftWall" type="StaticBody2D" parent="World" unique_id=1692138704]
+position = Vector2(-20, 140)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="World/LeftWall" unique_id=986423633]
+shape = SubResource("Shape_wall")
+
+[node name="Visual" type="Polygon2D" parent="World/LeftWall" unique_id=641209633]
+color = Color(0.22, 0.22, 0.32, 1)
+polygon = PackedVector2Array(-20, -600, 20, -600, 20, 600, -20, 600)
+
+[node name="RightWall" type="StaticBody2D" parent="World" unique_id=758547199]
+position = Vector2(1300, 140)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="World/RightWall" unique_id=897545683]
+shape = SubResource("Shape_wall")
+
+[node name="Visual" type="Polygon2D" parent="World/RightWall" unique_id=852361656]
+color = Color(0.22, 0.22, 0.32, 1)
+polygon = PackedVector2Array(-20, -600, 20, -600, 20, 600, -20, 600)
+
+[node name="Ceiling" type="StaticBody2D" parent="World" unique_id=2100601723]
+position = Vector2(640, -460)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="World/Ceiling" unique_id=212996843]
+shape = SubResource("Shape_ceiling")
+
+[node name="Visual" type="Polygon2D" parent="World/Ceiling" unique_id=1881853324]
+color = Color(0.22, 0.22, 0.32, 1)
+polygon = PackedVector2Array(-680, -20, 680, -20, 680, 20, -680, 20)
+
+[node name="PlatformLeft" type="StaticBody2D" parent="World" unique_id=2002065300]
+position = Vector2(240, 560)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="World/PlatformLeft" unique_id=1315047316]
+shape = SubResource("Shape_plat_side")
+
+[node name="Visual" type="Polygon2D" parent="World/PlatformLeft" unique_id=516091103]
+color = Color(0.35, 0.26, 0.14, 1)
+polygon = PackedVector2Array(-140, -10, 140, -10, 140, 10, -140, 10)
+
+[node name="PlatformRight" type="StaticBody2D" parent="World" unique_id=199022696]
+position = Vector2(1040, 560)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="World/PlatformRight" unique_id=1807713510]
+shape = SubResource("Shape_plat_side")
+
+[node name="Visual" type="Polygon2D" parent="World/PlatformRight" unique_id=1202246670]
+color = Color(0.35, 0.26, 0.14, 1)
+polygon = PackedVector2Array(-140, -10, 140, -10, 140, 10, -140, 10)
+
+[node name="PlatformCenter" type="StaticBody2D" parent="World" unique_id=6521704]
+position = Vector2(640, 400)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="World/PlatformCenter" unique_id=1101918985]
+shape = SubResource("Shape_plat_center")
+
+[node name="Visual" type="Polygon2D" parent="World/PlatformCenter" unique_id=153058634]
+color = Color(0.32, 0.24, 0.14, 1)
+polygon = PackedVector2Array(-180, -10, 180, -10, 180, 10, -180, 10)
+
+[node name="Player" parent="." unique_id=1554639981 instance=ExtResource("1_jm1iu")]
+position = Vector2(96, 656)
+scale = Vector2(3, 3)
+basketball_scene = ExtResource("2_pbc48")
+
+[node name="Boss" parent="." unique_id=551981438 instance=ExtResource("3_pbc48")]
+position = Vector2(639, 297)
+scale = Vector2(3, 3)

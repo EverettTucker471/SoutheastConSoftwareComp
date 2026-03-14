@@ -2,7 +2,6 @@
 
 [ext_resource type="PackedScene" uid="uid://player001" path="res://scenes/player.tscn" id="1_player"]
 [ext_resource type="PackedScene" uid="uid://hoop001" path="res://scenes/hoop.tscn" id="2_hoop"]
-[ext_resource type="PackedScene" uid="uid://basketball001" path="res://scenes/basketball.tscn" id="3_basketball"]
 [ext_resource type="PackedScene" uid="uid://elevator001" path="res://scenes/elevator.tscn" id="4_elevator"]
 [ext_resource type="PackedScene" uid="uid://ga3sc5j4g8u6" path="res://scenes/boss.tscn" id="6_xp8tn"]
 [ext_resource type="Script" path="res://scripts/level_transition.gd" id="7_qjcqe"]
@@ -85,9 +84,9 @@ script = ExtResource("7_rhhhf")
 [node name="Player" parent="." unique_id=1554639981 instance=ExtResource("1_player")]
 position = Vector2(250, 575)
 scale = Vector2(5, 5)
-basketball_scene = ExtResource("3_basketball")
 
 [node name="LevelTransition" type="Area2D" parent="." unique_id=1028068281]
+collision_mask = 2
 script = ExtResource("7_qjcqe")
 next_scene_path = "uid://level001"
 
