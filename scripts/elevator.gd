@@ -1,7 +1,7 @@
 extends AnimatableBody2D
 
 # Export variables so you can tweak the elevator's behavior right in the Inspector
-@export var move_offset: Vector2 = Vector2(0, -300) # Moves up 300 pixels
+@export var move_offset: Vector2 = Vector2(0, -800) # Moves up 800 pixels to the top of the screen
 @export var move_duration: float = 2.0
 
 @onready var trigger_plate: Area2D = $TriggerPlate
