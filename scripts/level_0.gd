@@ -22,80 +22,80 @@ var _ended := false
 
 
 func _ready() -> void:
-	_score = start_score
-	_time_left = time_limit
-	_update_labels()
-	_update_ui()
-	if _player != null and _player.has_method("set_camera_limits"):
-		_player.set_camera_limits(0, 0, camera_limit_right, camera_limit_bottom)
+    _score = start_score
+    _time_left = time_limit
+    _update_labels()
+    _update_ui()
+    if _player != null and _player.has_method("set_camera_limits"):
+        _player.set_camera_limits(0, 0, camera_limit_right, camera_limit_bottom)
     
-  if start_screen:
-		start_screen.visible = true
-	
-	# 2. Pause the entire game world (physics, animations, etc.)
-	get_tree().paused = true
+    if start_screen:
+        start_screen.visible = true
+    
+    # 2. Pause the entire game world (physics, animations, etc.)
+    get_tree().paused = true
 
 
 func _process(delta: float) -> void:
-	if _ended:
-		return
-	_time_left = max(_time_left - delta, 0.0)
-	_update_timer()
-	if _time_left <= 0.0:
-		_end_run()
+    if _ended:
+        return
+    _time_left = max(_time_left - delta, 0.0)
+    _update_timer()
+    if _time_left <= 0.0:
+        _end_run()
 
 
 func add_score(amount: int) -> void:
-	if _ended:
-		return
-	_score += amount
-	_update_ui()
+    if _ended:
+        return
+    _score += amount
+    _update_ui()
 
 
 func add_time(seconds: float) -> void:
-	if _ended:
-		return
-	_time_left += seconds
-	_update_timer()
+    if _ended:
+        return
+    _time_left += seconds
+    _update_timer()
 
 
 func _end_run() -> void:
-	_ended = true
-	if _player != null and _player.has_method("take_damage"):
-		_player.take_damage(999)
+    _ended = true
+    if _player != null and _player.has_method("take_damage"):
+        _player.take_damage(999)
 
 
 func _update_ui() -> void:
-	if _score_label != null:
-		_score_label.text = "Score: %d" % _score
-	_update_timer()
+    if _score_label != null:
+        _score_label.text = "Score: %d" % _score
+    _update_timer()
 
 
 func _update_timer() -> void:
-	if _timer_label == null:
-		return
-	var seconds_left := int(ceil(_time_left))
-	_timer_label.text = "Time: %d" % seconds_left
+    if _timer_label == null:
+        return
+    var seconds_left := int(ceil(_time_left))
+    _timer_label.text = "Time: %d" % seconds_left
 
 
 func _update_labels() -> void:
-	if _title_label != null:
-		_title_label.text = level_title
-	if _hint_primary_label != null:
-		_hint_primary_label.text = hint_primary
-	if _hint_secondary_label != null:
-		_hint_secondary_label.text = hint_secondary
+    if _title_label != null:
+        _title_label.text = level_title
+    if _hint_primary_label != null:
+        _hint_primary_label.text = hint_primary
+    if _hint_secondary_label != null:
+        _hint_secondary_label.text = hint_secondary
     
     
 func _input(event: InputEvent) -> void:
-	# 3. Listen for the spacebar, but ONLY if the start screen is currently showing
-	if start_screen.visible and event.is_action_pressed("ui_accept"):
-		
-		# Hide the UI
-		start_screen.visible = false
-		
-		# Unpause the game world to start the action
-		get_tree().paused = false
-		
-		# Tell Godot we handled this input so the player doesn't instantly jump
-		get_viewport().set_input_as_handled()
+    # 3. Listen for the spacebar, but ONLY if the start screen is currently showing
+    if start_screen.visible and event.is_action_pressed("ui_accept"):
+        
+        # Hide the UI
+        start_screen.visible = false
+        
+        # Unpause the game world to start the action
+        get_tree().paused = false
+        
+        # Tell Godot we handled this input so the player doesn't instantly jump
+        get_viewport().set_input_as_handled()

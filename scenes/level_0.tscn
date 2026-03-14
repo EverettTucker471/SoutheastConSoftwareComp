@@ -6,14 +6,13 @@
 [ext_resource type="PackedScene" uid="uid://basketball001" path="res://scenes/basketball.tscn" id="3_basketball"]
 [ext_resource type="Script" uid="uid://dmyg2fu7tjelh" path="res://scripts/collectible.gd" id="5_collectible"]
 [ext_resource type="Script" uid="uid://c0rxnpo4nkxvo" path="res://scripts/hazard.gd" id="5_hazard"]
-[ext_resource type="Script" uid="uid://du83yeodqe2pr" path="res://scripts/level_0.gd" id="5_level0"]
+[ext_resource type="Script" uid="uid://kqeoo7588evea" path="res://scripts/level_0.gd" id="5_level0"]
 [ext_resource type="Script" uid="uid://djd6hv5qudhqg" path="res://scripts/moving_platform.gd" id="5_moveplat"]
 [ext_resource type="Texture2D" uid="uid://cocknynwbdrf8" path="res://Platformer Art Complete Pack/Base pack/Items/spikes.png" id="9_spikes"]
 [ext_resource type="Texture2D" uid="uid://cgeay0a2psa00" path="res://Platformer Art Complete Pack/Base pack/Items/coinGold.png" id="10_coin"]
 [ext_resource type="Texture2D" uid="uid://doq1nl6fyw62f" path="res://Platformer Art Complete Pack/Base pack/Tiles/boxWarning.png" id="11_bwall_tex"]
 [ext_resource type="PackedScene" uid="uid://breakablewall001" path="res://scenes/breakable_wall.tscn" id="20_bwall_scene"]
 [ext_resource type="Texture2D" path="res://Platformer Art Complete Pack/Base pack/bg.png" id="12_bg"]
-
 
 
 [sub_resource type="RectangleShape2D" id="Shape_floor"]
@@ -30,10 +29,6 @@ size = Vector2(220, 20)
 
 [sub_resource type="RectangleShape2D" id="Shape_plat_small"]
 size = Vector2(160, 20)
-
-[node name="Level0" type="Node2D" unique_id=115407023]
-process_mode = 3
-script = ExtResource("1_xp8tn")
 
 [sub_resource type="RectangleShape2D" id="Shape_block"]
 size = Vector2(60, 20)
@@ -63,8 +58,13 @@ size = Vector2(320, 20)
 size = Vector2(180, 20)
 
 [sub_resource type="RectangleShape2D" id="Shape_collectible"]
+size = Vector2(20, 20)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_jv3i5"]
+size = Vector2(20, 20)
 
 [node name="Level0" type="Node2D" unique_id=115407023]
+process_mode = 3
 script = ExtResource("5_level0")
 level_title = "WORLD 1-1  |  SKYLINE SWITCH"
 hint_primary = "Use moving platforms and tokens to build momentum."
