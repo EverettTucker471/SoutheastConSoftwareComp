@@ -5,6 +5,8 @@
 [ext_resource type="PackedScene" uid="uid://basketball001" path="res://scenes/basketball.tscn" id="3_basketball"]
 [ext_resource type="PackedScene" uid="uid://elevator001" path="res://scenes/elevator.tscn" id="4_elevator"]
 [ext_resource type="Texture2D" uid="uid://bap5rnsgcqw02" path="res://Platformer Art Complete Pack/Extra animations and enemies/Alien sprites/alienPink.png" id="5_alien"]
+[ext_resource type="PackedScene" uid="uid://ga3sc5j4g8u6" path="res://scenes/boss.tscn" id="6_xp8tn"]
+[ext_resource type="Script" uid="uid://db30oj10lk31p" path="res://scripts/elevator.gd" id="7_rhhhf"]
 
 [sub_resource type="RectangleShape2D" id="Shape_floor"]
 size = Vector2(1280, 40)
@@ -77,7 +79,11 @@ texture = ExtResource("5_alien")
 
 [node name="Hoop" parent="." unique_id=1237140615 instance=ExtResource("2_hoop")]
 position = Vector2(1034, 431)
-elevator_pad_path = NodePath("../ElevatorPad")
+elevator_pad_path = NodePath("../Elevator")
 
-[node name="ElevatorPad" parent="." unique_id=1999999999 instance=ExtResource("4_elevator")]
-position = Vector2(640, 740)
+[node name="Boss" parent="." unique_id=551981438 instance=ExtResource("6_xp8tn")]
+position = Vector2(439, 596)
+scale = Vector2(3, 3)
+
+[node name="Elevator" parent="." unique_id=574230044 instance=ExtResource("4_elevator")]
+script = ExtResource("7_rhhhf")

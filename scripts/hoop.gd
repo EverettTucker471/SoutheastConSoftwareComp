@@ -33,7 +33,7 @@ func _on_body_entered(body: Node) -> void:
 		elevator_pad.rise_up()
 		return
 
-	# Freeze the game briefly, then transition.
+	# Freeze the game brawiefly, then transition.
 	get_tree().paused = true
 	await get_tree().create_timer(1.5, true).timeout
 	get_tree().paused = false
