@@ -1,7 +1,6 @@
 [gd_scene format=3 uid="uid://d2ipjlpmnprvm"]
 
 [ext_resource type="PackedScene" uid="uid://player001" path="res://scenes/player.tscn" id="1_jm1iu"]
-[ext_resource type="PackedScene" uid="uid://basketball001" path="res://scenes/basketball.tscn" id="2_pbc48"]
 [ext_resource type="PackedScene" uid="uid://ga3sc5j4g8u6" path="res://scenes/boss.tscn" id="3_pbc48"]
 
 [sub_resource type="RectangleShape2D" id="Shape_floor"]
@@ -96,8 +95,7 @@ polygon = PackedVector2Array(-180, -10, 180, -10, 180, 10, -180, 10)
 [node name="Player" parent="." unique_id=1554639981 instance=ExtResource("1_jm1iu")]
 position = Vector2(96, 656)
 scale = Vector2(3, 3)
-basketball_scene = ExtResource("2_pbc48")
 
 [node name="Boss" parent="." unique_id=551981438 instance=ExtResource("3_pbc48")]
 position = Vector2(639, 297)
-scale = Vector2(3, 3)
+scale = Vector2(2.5, 2.5)

@@ -15,7 +15,7 @@ compatibility/default_parent_skeleton_in_mesh_instance_3d=true
 [application]
 
 config/name="Space Jam: Trick Shot Escape"
-run/main_scene="res://scenes/level_0.tscn"
+run/main_scene="res://scenes/level_2.tscn"
 config/features=PackedStringArray("4.6", "Forward Plus")
 
 [display]
