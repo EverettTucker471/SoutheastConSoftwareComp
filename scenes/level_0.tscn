@@ -2,12 +2,21 @@
 
 [ext_resource type="PackedScene" uid="uid://player001" path="res://scenes/player.tscn" id="1_player"]
 [ext_resource type="PackedScene" uid="uid://hoop001" path="res://scenes/hoop.tscn" id="2_hoop"]
-[ext_resource type="PackedScene" uid="uid://elevator001" path="res://scenes/elevator.tscn" id="4_elevator"]
-[ext_resource type="Script" uid="uid://dapouxcup67cy" path="res://scripts/level_transition.gd" id="7_qjcqe"]
-[ext_resource type="Script" uid="uid://db30oj10lk31p" path="res://scripts/elevator.gd" id="7_rhhhf"]
+[ext_resource type="PackedScene" uid="uid://basketball001" path="res://scenes/basketball.tscn" id="3_basketball"]
+[ext_resource type="Script" uid="uid://dmyg2fu7tjelh" path="res://scripts/collectible.gd" id="5_collectible"]
+[ext_resource type="Script" uid="uid://c0rxnpo4nkxvo" path="res://scripts/hazard.gd" id="5_hazard"]
+[ext_resource type="Script" uid="uid://du83yeodqe2pr" path="res://scripts/level_0.gd" id="5_level0"]
+[ext_resource type="Script" uid="uid://djd6hv5qudhqg" path="res://scripts/moving_platform.gd" id="5_moveplat"]
+[ext_resource type="Texture2D" uid="uid://cocknynwbdrf8" path="res://Platformer Art Complete Pack/Base pack/Items/spikes.png" id="9_spikes"]
+[ext_resource type="Texture2D" uid="uid://cgeay0a2psa00" path="res://Platformer Art Complete Pack/Base pack/Items/coinGold.png" id="10_coin"]
+[ext_resource type="Texture2D" uid="uid://doq1nl6fyw62f" path="res://Platformer Art Complete Pack/Base pack/Tiles/boxWarning.png" id="11_bwall_tex"]
+[ext_resource type="PackedScene" uid="uid://breakablewall001" path="res://scenes/breakable_wall.tscn" id="20_bwall_scene"]
+[ext_resource type="Texture2D" path="res://Platformer Art Complete Pack/Base pack/bg.png" id="12_bg"]
+
+
 
 [sub_resource type="RectangleShape2D" id="Shape_floor"]
-size = Vector2(1280, 40)
+size = Vector2(4000, 40)
 
 [sub_resource type="RectangleShape2D" id="Shape_lwall"]
 size = Vector2(40, 800)
@@ -15,32 +24,67 @@ size = Vector2(40, 800)
 [sub_resource type="RectangleShape2D" id="Shape_rwall"]
 size = Vector2(40, 800)
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_jv3i5"]
-size = Vector2(1280, 41)
+[sub_resource type="RectangleShape2D" id="Shape_plat_med"]
+size = Vector2(220, 20)
+
+[sub_resource type="RectangleShape2D" id="Shape_plat_small"]
+size = Vector2(160, 20)
+
+[sub_resource type="RectangleShape2D" id="Shape_block"]
+size = Vector2(60, 20)
+
+[sub_resource type="RectangleShape2D" id="Shape_pipe_short"]
+size = Vector2(80, 120)
+
+[sub_resource type="RectangleShape2D" id="Shape_pipe_tall"]
+size = Vector2(80, 180)
+
+[sub_resource type="RectangleShape2D" id="Shape_hazard"]
+size = Vector2(220, 30)
+
+[sub_resource type="RectangleShape2D" id="Shape_step"]
+size = Vector2(80, 20)
+
+[sub_resource type="RectangleShape2D" id="Shape_bwall"]
+size = Vector2(20, 120)
+
+[sub_resource type="RectangleShape2D" id="Shape_bwall_detector"]
+size = Vector2(48, 130)
+
+[sub_resource type="RectangleShape2D" id="Shape_plat_long"]
+size = Vector2(320, 20)
+
+[sub_resource type="RectangleShape2D" id="Shape_plat_move"]
+size = Vector2(180, 20)
+
+[sub_resource type="RectangleShape2D" id="Shape_collectible"]
 
 [node name="Level0" type="Node2D" unique_id=115407023]
-
-[node name="Camera2D" type="Camera2D" parent="." unique_id=855597612]
-position = Vector2(640, 360)
+script = ExtResource("5_level0")
+level_title = "WORLD 1-1  |  SKYLINE SWITCH"
+hint_primary = "Use moving platforms and tokens to build momentum."
+hint_secondary = "Sink a basket to move on."
+time_limit = 140.0
 
 [node name="World" type="Node2D" parent="." unique_id=2070794445]
 
-[node name="CourtBackground" type="Polygon2D" parent="World" unique_id=1]
-color = Color(0.9, 0.7, 0.2, 1)
-polygon = PackedVector2Array(0, 0, 1280, 0, 1280, 650, 0, 650)
-
+[node name="CourtBackground" type="Sprite2D" parent="World"]
+texture = ExtResource("12_bg")
+centered = false
+position = Vector2(0, 0)
+scale = Vector2(15.6250, 2.5391)
 [node name="CourtLines" type="Line2D" parent="World" unique_id=2]
-points = PackedVector2Array(640, 0, 640, 650)
+points = PackedVector2Array(2000, 0, 2000, 650)
 width = 3.0
 default_color = Color(1, 1, 1, 0.8)
 
 [node name="CourtCenter" type="Line2D" parent="World" unique_id=3]
-points = PackedVector2Array(300, 200, 980, 200)
+points = PackedVector2Array(900, 200, 3100, 200)
 width = 2.0
 default_color = Color(1, 1, 1, 0.6)
 
 [node name="Floor" type="StaticBody2D" parent="World" unique_id=1275172385]
-position = Vector2(640, 700)
+position = Vector2(2000, 700)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="World/Floor" unique_id=1189360140]
 shape = SubResource("Shape_floor")
@@ -60,7 +104,7 @@ color = Color(0.22, 0.22, 0.32, 1)
 polygon = PackedVector2Array(-20, -400, 20, -400, 20, 400, -20, 400)
 
 [node name="RightWall" type="StaticBody2D" parent="World" unique_id=1788493782]
-position = Vector2(1300, 340)
+position = Vector2(4020, 340)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="World/RightWall" unique_id=972822010]
 shape = SubResource("Shape_rwall")
@@ -69,22 +113,465 @@ shape = SubResource("Shape_rwall")
 color = Color(0.22, 0.22, 0.32, 1)
 polygon = PackedVector2Array(-20, -400, 20, -400, 20, 400, -20, 400)
 
-[node name="Hoop" parent="." unique_id=1237140615 instance=ExtResource("2_hoop")]
-position = Vector2(1034, 431)
-elevator_pad_path = NodePath("../Elevator")
+[node name="PlatformStart" type="StaticBody2D" parent="World" unique_id=1459982837]
+position = Vector2(360, 620)
 
-[node name="Elevator" parent="." unique_id=574230044 instance=ExtResource("4_elevator")]
-script = ExtResource("7_rhhhf")
+[node name="CollisionShape2D" type="CollisionShape2D" parent="World/PlatformStart" unique_id=614493452]
+shape = SubResource("Shape_plat_med")
+
+[node name="Visual" type="Polygon2D" parent="World/PlatformStart" unique_id=1074022041]
+color = Color(0.35, 0.26, 0.14, 1)
+polygon = PackedVector2Array(-110, -10, 110, -10, 110, 10, -110, 10)
+
+[node name="PlatformMid1" type="StaticBody2D" parent="World" unique_id=1444089864]
+position = Vector2(640, 540)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="World/PlatformMid1" unique_id=1104465484]
+shape = SubResource("Shape_plat_small")
+
+[node name="Visual" type="Polygon2D" parent="World/PlatformMid1" unique_id=1777323360]
+color = Color(0.32, 0.24, 0.14, 1)
+polygon = PackedVector2Array(-80, -10, 80, -10, 80, 10, -80, 10)
+
+[node name="PlatformMid2" type="StaticBody2D" parent="World" unique_id=225579964]
+position = Vector2(920, 460)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="World/PlatformMid2" unique_id=2036116793]
+shape = SubResource("Shape_plat_small")
+
+[node name="Visual" type="Polygon2D" parent="World/PlatformMid2" unique_id=542758673]
+color = Color(0.32, 0.24, 0.14, 1)
+polygon = PackedVector2Array(-80, -10, 80, -10, 80, 10, -80, 10)
+
+[node name="PlatformMid3" type="StaticBody2D" parent="World" unique_id=402388083]
+position = Vector2(1240, 360)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="World/PlatformMid3" unique_id=1982194528]
+shape = SubResource("Shape_plat_small")
+
+[node name="Visual" type="Polygon2D" parent="World/PlatformMid3" unique_id=1221235679]
+color = Color(0.32, 0.24, 0.14, 1)
+polygon = PackedVector2Array(-80, -10, 80, -10, 80, 10, -80, 10)
+
+[node name="PlatformTop" type="StaticBody2D" parent="World" unique_id=206991581]
+position = Vector2(1500, 280)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="World/PlatformTop" unique_id=43447973]
+shape = SubResource("Shape_plat_small")
+
+[node name="Visual" type="Polygon2D" parent="World/PlatformTop" unique_id=1657792454]
+color = Color(0.3, 0.22, 0.16, 1)
+polygon = PackedVector2Array(-80, -10, 80, -10, 80, 10, -80, 10)
+
+[node name="Blocks" type="Node2D" parent="World" unique_id=565028661]
+
+[node name="BlockA" type="StaticBody2D" parent="World/Blocks" unique_id=1615824306]
+position = Vector2(520, 380)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="World/Blocks/BlockA" unique_id=1831231953]
+shape = SubResource("Shape_block")
+
+[node name="Visual" type="Polygon2D" parent="World/Blocks/BlockA" unique_id=44989461]
+color = Color(0.85, 0.72, 0.08, 1)
+polygon = PackedVector2Array(-30, -10, 30, -10, 30, 10, -30, 10)
+
+[node name="BlockB" type="StaticBody2D" parent="World/Blocks" unique_id=1172350708]
+position = Vector2(590, 380)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="World/Blocks/BlockB" unique_id=49605990]
+shape = SubResource("Shape_block")
+
+[node name="Visual" type="Polygon2D" parent="World/Blocks/BlockB" unique_id=1373319339]
+color = Color(0.85, 0.72, 0.08, 1)
+polygon = PackedVector2Array(-30, -10, 30, -10, 30, 10, -30, 10)
+
+[node name="BlockC" type="StaticBody2D" parent="World/Blocks" unique_id=2053356092]
+position = Vector2(660, 380)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="World/Blocks/BlockC" unique_id=250324268]
+shape = SubResource("Shape_block")
+
+[node name="Visual" type="Polygon2D" parent="World/Blocks/BlockC" unique_id=1805344801]
+color = Color(0.85, 0.72, 0.08, 1)
+polygon = PackedVector2Array(-30, -10, 30, -10, 30, 10, -30, 10)
+
+[node name="PipeShort" type="StaticBody2D" parent="World" unique_id=1471985062]
+position = Vector2(520, 660)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="World/PipeShort" unique_id=1781000804]
+shape = SubResource("Shape_pipe_short")
+
+[node name="Visual" type="Polygon2D" parent="World/PipeShort" unique_id=2006670853]
+color = Color(0.2, 0.6, 0.2, 1)
+polygon = PackedVector2Array(-40, -60, 40, -60, 40, 60, -40, 60)
+
+[node name="PipeTall" type="StaticBody2D" parent="World" unique_id=165587782]
+position = Vector2(820, 640)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="World/PipeTall" unique_id=1700463684]
+shape = SubResource("Shape_pipe_tall")
+
+[node name="Visual" type="Polygon2D" parent="World/PipeTall" unique_id=1357328014]
+color = Color(0.2, 0.6, 0.2, 1)
+polygon = PackedVector2Array(-40, -90, 40, -90, 40, 90, -40, 90)
+
+[node name="Spikes" type="Area2D" parent="World" unique_id=682266975]
+position = Vector2(700, 690)
+script = ExtResource("5_hazard")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="World/Spikes" unique_id=816879532]
+shape = SubResource("Shape_hazard")
+
+[node name="Visual" type="Sprite2D" parent="World/Spikes" unique_id=560137400]
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("9_spikes")
+
+[node name="Stairs" type="Node2D" parent="World" unique_id=1766227312]
+
+[node name="Step1" type="StaticBody2D" parent="World/Stairs" unique_id=589779112]
+position = Vector2(2800, 660)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="World/Stairs/Step1" unique_id=776969819]
+shape = SubResource("Shape_step")
+
+[node name="Visual" type="Polygon2D" parent="World/Stairs/Step1" unique_id=1379409822]
+color = Color(0.4, 0.3, 0.18, 1)
+polygon = PackedVector2Array(-40, -10, 40, -10, 40, 10, -40, 10)
+
+[node name="Step2" type="StaticBody2D" parent="World/Stairs" unique_id=1883406372]
+position = Vector2(2880, 640)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="World/Stairs/Step2" unique_id=1274907488]
+shape = SubResource("Shape_step")
+
+[node name="Visual" type="Polygon2D" parent="World/Stairs/Step2" unique_id=1727825346]
+color = Color(0.4, 0.3, 0.18, 1)
+polygon = PackedVector2Array(-40, -10, 40, -10, 40, 10, -40, 10)
+
+[node name="Step3" type="StaticBody2D" parent="World/Stairs" unique_id=777383802]
+position = Vector2(2960, 620)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="World/Stairs/Step3" unique_id=2035383224]
+shape = SubResource("Shape_step")
+
+[node name="Visual" type="Polygon2D" parent="World/Stairs/Step3" unique_id=1577114827]
+color = Color(0.4, 0.3, 0.18, 1)
+polygon = PackedVector2Array(-40, -10, 40, -10, 40, 10, -40, 10)
+
+[node name="Step4" type="StaticBody2D" parent="World/Stairs" unique_id=506571505]
+position = Vector2(3040, 600)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="World/Stairs/Step4" unique_id=1904041238]
+shape = SubResource("Shape_step")
+
+[node name="Visual" type="Polygon2D" parent="World/Stairs/Step4" unique_id=545364818]
+color = Color(0.4, 0.3, 0.18, 1)
+polygon = PackedVector2Array(-40, -10, 40, -10, 40, 10, -40, 10)
+
+[node name="BreakableWall" parent="World" instance=ExtResource("20_bwall_scene")]
+position = Vector2(1200, 520)
+[node name="PlatformLong1" type="StaticBody2D" parent="World" unique_id=1346290486]
+position = Vector2(1200, 600)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="World/PlatformLong1" unique_id=1469540080]
+shape = SubResource("Shape_plat_long")
+
+[node name="Visual" type="Polygon2D" parent="World/PlatformLong1" unique_id=684522694]
+color = Color(0.32, 0.24, 0.14, 1)
+polygon = PackedVector2Array(-160, -10, 160, -10, 160, 10, -160, 10)
+
+[node name="PlatformLong2" type="StaticBody2D" parent="World" unique_id=1426662632]
+position = Vector2(1600, 520)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="World/PlatformLong2" unique_id=1269013197]
+shape = SubResource("Shape_plat_long")
+
+[node name="Visual" type="Polygon2D" parent="World/PlatformLong2" unique_id=1765794479]
+color = Color(0.32, 0.24, 0.14, 1)
+polygon = PackedVector2Array(-160, -10, 160, -10, 160, 10, -160, 10)
+
+[node name="PlatformHigh" type="StaticBody2D" parent="World" unique_id=1028349527]
+position = Vector2(1900, 420)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="World/PlatformHigh" unique_id=1198048592]
+shape = SubResource("Shape_plat_med")
+
+[node name="Visual" type="Polygon2D" parent="World/PlatformHigh" unique_id=1790016047]
+color = Color(0.3, 0.22, 0.16, 1)
+polygon = PackedVector2Array(-110, -10, 110, -10, 110, 10, -110, 10)
+
+[node name="PipeShort2" type="StaticBody2D" parent="World" unique_id=876169855]
+position = Vector2(2100, 660)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="World/PipeShort2" unique_id=142453551]
+shape = SubResource("Shape_pipe_short")
+
+[node name="Visual" type="Polygon2D" parent="World/PipeShort2" unique_id=2023960615]
+color = Color(0.2, 0.6, 0.2, 1)
+polygon = PackedVector2Array(-40, -60, 40, -60, 40, 60, -40, 60)
+
+[node name="PipeTall2" type="StaticBody2D" parent="World" unique_id=1255118510]
+position = Vector2(2360, 640)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="World/PipeTall2" unique_id=2113738467]
+shape = SubResource("Shape_pipe_tall")
+
+[node name="Visual" type="Polygon2D" parent="World/PipeTall2" unique_id=803956037]
+color = Color(0.2, 0.6, 0.2, 1)
+polygon = PackedVector2Array(-40, -90, 40, -90, 40, 90, -40, 90)
+
+[node name="Blocks2" type="Node2D" parent="World" unique_id=1337021660]
+
+[node name="Block2A" type="StaticBody2D" parent="World/Blocks2" unique_id=1392012142]
+position = Vector2(2400, 380)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="World/Blocks2/Block2A" unique_id=1187572098]
+shape = SubResource("Shape_block")
+
+[node name="Visual" type="Polygon2D" parent="World/Blocks2/Block2A" unique_id=661598743]
+color = Color(0.85, 0.72, 0.08, 1)
+polygon = PackedVector2Array(-30, -10, 30, -10, 30, 10, -30, 10)
+
+[node name="Block2B" type="StaticBody2D" parent="World/Blocks2" unique_id=950195596]
+position = Vector2(2470, 380)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="World/Blocks2/Block2B" unique_id=1037266659]
+shape = SubResource("Shape_block")
+
+[node name="Visual" type="Polygon2D" parent="World/Blocks2/Block2B" unique_id=1997018054]
+color = Color(0.85, 0.72, 0.08, 1)
+polygon = PackedVector2Array(-30, -10, 30, -10, 30, 10, -30, 10)
+
+[node name="Block2C" type="StaticBody2D" parent="World/Blocks2" unique_id=1527174046]
+position = Vector2(2540, 380)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="World/Blocks2/Block2C" unique_id=1039902067]
+shape = SubResource("Shape_block")
+
+[node name="Visual" type="Polygon2D" parent="World/Blocks2/Block2C" unique_id=1898134067]
+color = Color(0.85, 0.72, 0.08, 1)
+polygon = PackedVector2Array(-30, -10, 30, -10, 30, 10, -30, 10)
+
+[node name="Spikes2" type="Area2D" parent="World" unique_id=1792633672]
+position = Vector2(2600, 690)
+script = ExtResource("5_hazard")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="World/Spikes2" unique_id=1907473295]
+shape = SubResource("Shape_hazard")
+
+[node name="Visual" type="Sprite2D" parent="World/Spikes2" unique_id=690903450]
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("9_spikes")
+
+[node name="Stairs2" type="Node2D" parent="World" unique_id=1690872798]
+
+[node name="Step2_1" type="StaticBody2D" parent="World/Stairs2" unique_id=594517608]
+position = Vector2(3200, 660)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="World/Stairs2/Step2_1" unique_id=714316108]
+shape = SubResource("Shape_step")
+
+[node name="Visual" type="Polygon2D" parent="World/Stairs2/Step2_1" unique_id=250132697]
+color = Color(0.4, 0.3, 0.18, 1)
+polygon = PackedVector2Array(-40, -10, 40, -10, 40, 10, -40, 10)
+
+[node name="Step2_2" type="StaticBody2D" parent="World/Stairs2" unique_id=53890876]
+position = Vector2(3280, 640)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="World/Stairs2/Step2_2" unique_id=1411428457]
+shape = SubResource("Shape_step")
+
+[node name="Visual" type="Polygon2D" parent="World/Stairs2/Step2_2" unique_id=724110826]
+color = Color(0.4, 0.3, 0.18, 1)
+polygon = PackedVector2Array(-40, -10, 40, -10, 40, 10, -40, 10)
+
+[node name="Step2_3" type="StaticBody2D" parent="World/Stairs2" unique_id=873649027]
+position = Vector2(3360, 620)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="World/Stairs2/Step2_3" unique_id=1366300062]
+shape = SubResource("Shape_step")
+
+[node name="Visual" type="Polygon2D" parent="World/Stairs2/Step2_3" unique_id=2037541210]
+color = Color(0.4, 0.3, 0.18, 1)
+polygon = PackedVector2Array(-40, -10, 40, -10, 40, 10, -40, 10)
+
+[node name="Step2_4" type="StaticBody2D" parent="World/Stairs2" unique_id=2129860879]
+position = Vector2(3440, 600)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="World/Stairs2/Step2_4" unique_id=1063184243]
+shape = SubResource("Shape_step")
+
+[node name="Visual" type="Polygon2D" parent="World/Stairs2/Step2_4" unique_id=1943321911]
+color = Color(0.4, 0.3, 0.18, 1)
+polygon = PackedVector2Array(-40, -10, 40, -10, 40, 10, -40, 10)
+
+[node name="PlatformExit" type="StaticBody2D" parent="World" unique_id=506870981]
+position = Vector2(3600, 420)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="World/PlatformExit" unique_id=1975954682]
+shape = SubResource("Shape_plat_med")
+
+[node name="Visual" type="Polygon2D" parent="World/PlatformExit" unique_id=1277779215]
+color = Color(0.3, 0.22, 0.16, 1)
+polygon = PackedVector2Array(-110, -10, 110, -10, 110, 10, -110, 10)
+
+[node name="MovingPlatformA" type="AnimatableBody2D" parent="World" unique_id=1598434173]
+position = Vector2(2000, 560)
+script = ExtResource("5_moveplat")
+move_offset = Vector2(0, -180)
+move_duration = 2.2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="World/MovingPlatformA" unique_id=939299677]
+shape = SubResource("Shape_plat_move")
+
+[node name="Visual" type="Polygon2D" parent="World/MovingPlatformA" unique_id=1501240214]
+color = Color(0.26, 0.22, 0.36, 1)
+polygon = PackedVector2Array(-90, -10, 90, -10, 90, 10, -90, 10)
+
+[node name="MovingPlatformB" type="AnimatableBody2D" parent="World" unique_id=127854541]
+position = Vector2(3000, 520)
+script = ExtResource("5_moveplat")
+move_offset = Vector2(240, 0)
+move_duration = 2.8
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="World/MovingPlatformB" unique_id=293636947]
+shape = SubResource("Shape_plat_move")
+
+[node name="Visual" type="Polygon2D" parent="World/MovingPlatformB" unique_id=694239592]
+color = Color(0.26, 0.22, 0.36, 1)
+polygon = PackedVector2Array(-90, -10, 90, -10, 90, 10, -90, 10)
+
+[node name="Collectibles" type="Node2D" parent="World" unique_id=1722666679]
+
+[node name="TokenA" type="Area2D" parent="World/Collectibles" unique_id=1618181480]
+position = Vector2(640, 500)
+script = ExtResource("5_collectible")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="World/Collectibles/TokenA" unique_id=1098347348]
+shape = SubResource("Shape_collectible")
+
+[node name="Visual" type="Sprite2D" parent="World/Collectibles/TokenA" unique_id=2028470692]
+scale = Vector2(0.6, 0.6)
+texture = ExtResource("10_coin")
+
+[node name="TokenB" type="Area2D" parent="World/Collectibles" unique_id=857638301]
+position = Vector2(920, 420)
+script = ExtResource("5_collectible")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="World/Collectibles/TokenB" unique_id=2019359390]
+shape = SubResource("Shape_collectible")
+
+[node name="Visual" type="Sprite2D" parent="World/Collectibles/TokenB" unique_id=1358458023]
+scale = Vector2(0.6, 0.6)
+texture = ExtResource("10_coin")
+
+[node name="TokenC" type="Area2D" parent="World/Collectibles" unique_id=1187658506]
+position = Vector2(1240, 320)
+script = ExtResource("5_collectible")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="World/Collectibles/TokenC" unique_id=506859296]
+shape = SubResource("Shape_collectible")
+
+[node name="Visual" type="Sprite2D" parent="World/Collectibles/TokenC" unique_id=1718410434]
+scale = Vector2(0.6, 0.6)
+texture = ExtResource("10_coin")
+
+[node name="TokenD" type="Area2D" parent="World/Collectibles" unique_id=1608075892]
+position = Vector2(1500, 240)
+script = ExtResource("5_collectible")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="World/Collectibles/TokenD" unique_id=1673959820]
+shape = SubResource("Shape_collectible")
+
+[node name="Visual" type="Sprite2D" parent="World/Collectibles/TokenD" unique_id=1495863995]
+scale = Vector2(0.6, 0.6)
+texture = ExtResource("10_coin")
+
+[node name="TokenE" type="Area2D" parent="World/Collectibles" unique_id=1483741271]
+position = Vector2(1900, 380)
+script = ExtResource("5_collectible")
+value = 10
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="World/Collectibles/TokenE" unique_id=1577731831]
+shape = SubResource("Shape_collectible")
+
+[node name="Visual" type="Sprite2D" parent="World/Collectibles/TokenE" unique_id=427557690]
+scale = Vector2(0.6, 0.6)
+texture = ExtResource("10_coin")
+
+[node name="TokenF" type="Area2D" parent="World/Collectibles" unique_id=470803286]
+position = Vector2(3400, 360)
+script = ExtResource("5_collectible")
+value = 15
+heal_amount = 1
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="World/Collectibles/TokenF" unique_id=1577483130]
+shape = SubResource("Shape_collectible")
+
+[node name="Visual" type="Sprite2D" parent="World/Collectibles/TokenF" unique_id=970153687]
+scale = Vector2(0.6, 0.6)
+texture = ExtResource("10_coin")
+
+[node name="Hoop" parent="." unique_id=1237140615 instance=ExtResource("2_hoop")]
+position = Vector2(3680, 420)
+next_level = "res://scenes/level_1.tscn"
 
 [node name="Player" parent="." unique_id=1554639981 instance=ExtResource("1_player")]
-position = Vector2(250, 575)
-scale = Vector2(5, 5)
+position = Vector2(120, 688)
+scale = Vector2(3, 3)
 
-[node name="LevelTransition" type="Area2D" parent="." unique_id=1028068281]
-collision_mask = 2
-script = ExtResource("7_qjcqe")
-next_scene_path = "uid://level001"
+[node name="BallStart" parent="." unique_id=2032087331 instance=ExtResource("3_basketball")]
+position = Vector2(200, 640)
 
-[node name="TransitionHitbox" type="CollisionShape2D" parent="LevelTransition" unique_id=1543723965]
-position = Vector2(640, -54.5)
-shape = SubResource("RectangleShape2D_jv3i5")
+[node name="BallMid" parent="." unique_id=704553215 instance=ExtResource("3_basketball")]
+position = Vector2(920, 440)
+
+[node name="BallEnd" parent="." unique_id=1144218084 instance=ExtResource("3_basketball")]
+position = Vector2(3000, 620)
+
+[node name="BallFar" parent="." unique_id=1565281445 instance=ExtResource("3_basketball")]
+position = Vector2(2000, 420)
+
+[node name="HUD" type="CanvasLayer" parent="." unique_id=1153259460]
+
+[node name="LevelTitle" type="Label" parent="HUD" unique_id=1970110708]
+offset_left = 24.0
+offset_top = 16.0
+offset_right = 640.0
+offset_bottom = 48.0
+theme_override_font_sizes/font_size = 26
+text = "WORLD 1-1  |  SKYLINE RUN"
+
+[node name="HintShoot" type="Label" parent="HUD" unique_id=483443403]
+offset_left = 24.0
+offset_top = 52.0
+offset_right = 640.0
+offset_bottom = 80.0
+theme_override_font_sizes/font_size = 18
+text = "Chain platforms, avoid spikes, and grab tokens."
+
+[node name="HintGoal" type="Label" parent="HUD" unique_id=1950698158]
+offset_left = 24.0
+offset_top = 76.0
+offset_right = 640.0
+offset_bottom = 104.0
+theme_override_font_sizes/font_size = 18
+text = "Score a basket at the far end to exit."
+
+[node name="ScoreLabel" type="Label" parent="HUD" unique_id=1422369320]
+offset_left = 980.0
+offset_top = 16.0
+offset_right = 1240.0
+offset_bottom = 40.0
+theme_override_font_sizes/font_size = 20
+text = "Score: 0"
+horizontal_alignment = 2
+
+[node name="TimerLabel" type="Label" parent="HUD" unique_id=2128073184]
+offset_left = 980.0
+offset_top = 40.0
+offset_right = 1240.0
+offset_bottom = 64.0
+theme_override_font_sizes/font_size = 20
+text = "Time: 120"
+horizontal_alignment = 2

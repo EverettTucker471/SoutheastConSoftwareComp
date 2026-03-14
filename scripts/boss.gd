@@ -83,6 +83,9 @@ func _handle_ai(delta: float) -> void:
 			velocity.y = JUMP_VELOCITY
 
 func _on_hitbox_body_entered(body: Node2D) -> void:
+	if body.is_in_group("player") and body.has_method("take_damage"):
+		body.take_damage(1)
+		return
 	if body.get_script() != null and body.get_script().resource_path == "res://scripts/basketball.gd":
 		var ball = body as RigidBody2D
 		var impact_speed = ball.linear_velocity.length()

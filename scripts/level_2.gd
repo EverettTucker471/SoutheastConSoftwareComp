@@ -25,4 +25,4 @@ func _on_boss_defeated() -> void:
 func _input(event: InputEvent) -> void:
 	# If the game is won and the player presses "ui_accept" (usually Space/Enter)
 	if _is_game_won and event.is_action_pressed("ui_accept"):
-		get_tree().change_scene_to_file("res://scenes/level_0.tscn")
+		get_tree().change_scene_to_file("res://scenes/level_3.tscn")

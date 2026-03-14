@@ -3,6 +3,8 @@
 [ext_resource type="PackedScene" uid="uid://player001" path="res://scenes/player.tscn" id="1_jm1iu"]
 [ext_resource type="Script" uid="uid://caeuxtwea5lv3" path="res://scripts/level_2.gd" id="1_pbc48"]
 [ext_resource type="PackedScene" uid="uid://ga3sc5j4g8u6" path="res://scenes/boss.tscn" id="3_pbc48"]
+[ext_resource type="Texture2D" path="res://Platformer Art Complete Pack/Base pack/bg.png" id="12_bg"]
+
 
 [sub_resource type="RectangleShape2D" id="Shape_floor"]
 size = Vector2(1360, 40)
@@ -18,6 +20,9 @@ size = Vector2(280, 20)
 
 [sub_resource type="RectangleShape2D" id="Shape_plat_center"]
 size = Vector2(360, 20)
+
+[sub_resource type="RectangleShape2D" id="Shape_plat_small"]
+size = Vector2(200, 20)
 
 [node name="Level2" type="Node2D" unique_id=1005384430]
 script = ExtResource("1_pbc48")
@@ -94,6 +99,36 @@ shape = SubResource("Shape_plat_center")
 color = Color(0.32, 0.24, 0.14, 1)
 polygon = PackedVector2Array(-180, -10, 180, -10, 180, 10, -180, 10)
 
+[node name="PlatformUpperLeft" type="StaticBody2D" parent="World" unique_id=221395112]
+position = Vector2(220, 300)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="World/PlatformUpperLeft" unique_id=1527506328]
+shape = SubResource("Shape_plat_small")
+
+[node name="Visual" type="Polygon2D" parent="World/PlatformUpperLeft" unique_id=601133335]
+color = Color(0.28, 0.22, 0.16, 1)
+polygon = PackedVector2Array(-100, -10, 100, -10, 100, 10, -100, 10)
+
+[node name="PlatformUpperRight" type="StaticBody2D" parent="World" unique_id=729131984]
+position = Vector2(1060, 300)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="World/PlatformUpperRight" unique_id=341239656]
+shape = SubResource("Shape_plat_small")
+
+[node name="Visual" type="Polygon2D" parent="World/PlatformUpperRight" unique_id=1473301863]
+color = Color(0.28, 0.22, 0.16, 1)
+polygon = PackedVector2Array(-100, -10, 100, -10, 100, 10, -100, 10)
+
+[node name="PlatformMidRight" type="StaticBody2D" parent="World" unique_id=597726164]
+position = Vector2(920, 460)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="World/PlatformMidRight" unique_id=1944555754]
+shape = SubResource("Shape_plat_small")
+
+[node name="Visual" type="Polygon2D" parent="World/PlatformMidRight" unique_id=1132320031]
+color = Color(0.32, 0.24, 0.14, 1)
+polygon = PackedVector2Array(-100, -10, 100, -10, 100, 10, -100, 10)
+
 [node name="Player" parent="." unique_id=1554639981 instance=ExtResource("1_jm1iu")]
 position = Vector2(96, 656)
 scale = Vector2(3, 3)
@@ -104,11 +139,11 @@ scale = Vector2(2.5, 2.5)
 
 [node name="WinScreen" type="CanvasLayer" parent="." unique_id=1976202130]
 
-[node name="Background" type="ColorRect" parent="WinScreen" unique_id=2016261283]
-offset_right = 1280.0
-offset_bottom = 720.0
-color = Color(0, 0, 0, 0.78)
-
+[node name="Background" type="Sprite2D" parent="World"]
+texture = ExtResource("12_bg")
+centered = false
+position = Vector2(0, 0)
+scale = Vector2(5.3125, 2.5391)
 [node name="WinLabel" type="Label" parent="WinScreen" unique_id=1755509194]
 offset_left = 340.0
 offset_top = 260.0
@@ -124,5 +159,5 @@ offset_top = 390.0
 offset_right = 940.0
 offset_bottom = 440.0
 theme_override_font_sizes/font_size = 28
-text = "Press SPACE to restart"
+text = "Press SPACE to continue"
 horizontal_alignment = 1

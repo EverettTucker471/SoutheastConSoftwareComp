@@ -7,6 +7,8 @@ signal level_complete
 @export var next_level: String = ""
 # Optional node path to an elevator pad to trigger instead of transitioning.
 @export var elevator_pad_path: NodePath = NodePath()
+@export var score_reward: int = 50
+@export var time_bonus: float = 10.0
 
 var elevator_pad: Node2D
 
@@ -26,6 +28,11 @@ func _on_body_entered(body: Node) -> void:
 
 	print("=== BASKETBALL IN HOOP! ===")
 	emit_signal("level_complete")
+	var level := get_tree().current_scene
+	if level != null and level.has_method("add_score"):
+		level.add_score(score_reward)
+	if time_bonus > 0.0 and level != null and level.has_method("add_time"):
+		level.add_time(time_bonus)
 
 	# If there's an elevator pad, trigger it instead of transitioning levels.
 	if elevator_pad != null:

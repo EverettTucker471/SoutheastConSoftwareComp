@@ -1,0 +1,307 @@
+[gd_scene format=3 uid="uid://level003"]
+
+[ext_resource type="PackedScene" uid="uid://player001" path="res://scenes/player.tscn" id="1_player"]
+[ext_resource type="PackedScene" uid="uid://hoop001" path="res://scenes/hoop.tscn" id="2_hoop"]
+[ext_resource type="PackedScene" uid="uid://basketball001" path="res://scenes/basketball.tscn" id="3_basketball"]
+[ext_resource type="Script" uid="uid://du83yeodqe2pr" path="res://scripts/level_0.gd" id="4_level"]
+[ext_resource type="Script" uid="uid://c0rxnpo4nkxvo" path="res://scripts/hazard.gd" id="5_hazard"]
+[ext_resource type="Script" uid="uid://dmyg2fu7tjelh" path="res://scripts/collectible.gd" id="6_collectible"]
+[ext_resource type="Script" uid="uid://djd6hv5qudhqg" path="res://scripts/moving_platform.gd" id="7_moveplat"]
+[ext_resource type="Script" uid="uid://p4e2gikrhelm" path="res://scripts/breakable_wall.gd" id="8_bwall"]
+[ext_resource type="Texture2D" path="res://Platformer Art Complete Pack/Base pack/Items/spikes.png" id="9_spikes"]
+[ext_resource type="Texture2D" path="res://Platformer Art Complete Pack/Base pack/Items/coinGold.png" id="10_coin"]
+[ext_resource type="Texture2D" path="res://Platformer Art Complete Pack/Base pack/bg.png" id="12_bg"]
+
+
+
+[sub_resource type="RectangleShape2D" id="Shape_floor"]
+size = Vector2(3200, 40)
+
+[sub_resource type="RectangleShape2D" id="Shape_wall"]
+size = Vector2(40, 800)
+
+[sub_resource type="RectangleShape2D" id="Shape_plat_small"]
+size = Vector2(180, 20)
+
+[sub_resource type="RectangleShape2D" id="Shape_plat_med"]
+size = Vector2(240, 20)
+
+[sub_resource type="RectangleShape2D" id="Shape_plat_long"]
+size = Vector2(320, 20)
+
+[sub_resource type="RectangleShape2D" id="Shape_hazard"]
+size = Vector2(220, 30)
+
+[sub_resource type="RectangleShape2D" id="Shape_collectible"]
+size = Vector2(20, 20)
+
+[sub_resource type="RectangleShape2D" id="Shape_plat_move"]
+size = Vector2(180, 20)
+
+[sub_resource type="RectangleShape2D" id="Shape_bwall"]
+size = Vector2(20, 120)
+
+[sub_resource type="RectangleShape2D" id="Shape_bwall_detector"]
+size = Vector2(48, 130)
+
+[node name="Level3" type="Node2D"]
+script = ExtResource("4_level")
+level_title = "WORLD 1-3  |  SKY BRIDGES"
+hint_primary = "Long gaps and narrow landings. Keep your momentum."
+hint_secondary = "A clean shot at the end unlocks the exit."
+time_limit = 110.0
+camera_limit_right = 3200
+camera_limit_bottom = 720
+
+[node name="World" type="Node2D" parent="."]
+
+[node name="Background" type="Sprite2D" parent="World"]
+texture = ExtResource("12_bg")
+centered = false
+position = Vector2(0, 0)
+scale = Vector2(12.5000, 2.5391)
+[node name="Floor" type="StaticBody2D" parent="World"]
+position = Vector2(1600.0, 700)
+[node name="CollisionShape2D" type="CollisionShape2D" parent="World/Floor"]
+shape = SubResource("Shape_floor")
+[node name="Visual" type="Polygon2D" parent="World/Floor"]
+color = Color(0.3, 0.22, 0.12, 1)
+polygon = PackedVector2Array(-1600.0, -20.0, 1600.0, -20.0, 1600.0, 20.0, -1600.0, 20.0)
+
+[node name="LeftWall" type="StaticBody2D" parent="World"]
+position = Vector2(-20, 340)
+[node name="CollisionShape2D" type="CollisionShape2D" parent="World/LeftWall"]
+shape = SubResource("Shape_wall")
+[node name="Visual" type="Polygon2D" parent="World/LeftWall"]
+color = Color(0.22, 0.22, 0.32, 1)
+polygon = PackedVector2Array(-20.0, -400.0, 20.0, -400.0, 20.0, 400.0, -20.0, 400.0)
+
+[node name="RightWall" type="StaticBody2D" parent="World"]
+position = Vector2(3220, 340)
+[node name="CollisionShape2D" type="CollisionShape2D" parent="World/RightWall"]
+shape = SubResource("Shape_wall")
+[node name="Visual" type="Polygon2D" parent="World/RightWall"]
+color = Color(0.22, 0.22, 0.32, 1)
+polygon = PackedVector2Array(-20.0, -400.0, 20.0, -400.0, 20.0, 400.0, -20.0, 400.0)
+
+[node name="Platform1" type="StaticBody2D" parent="World"]
+position = Vector2(360, 620)
+[node name="CollisionShape2D" type="CollisionShape2D" parent="World/Platform1"]
+shape = SubResource("Shape_plat_med")
+[node name="Visual" type="Polygon2D" parent="World/Platform1"]
+color = Color(0.32, 0.24, 0.14, 1)
+polygon = PackedVector2Array(-120.0, -10.0, 120.0, -10.0, 120.0, 10.0, -120.0, 10.0)
+
+[node name="Platform2" type="StaticBody2D" parent="World"]
+position = Vector2(640, 540)
+[node name="CollisionShape2D" type="CollisionShape2D" parent="World/Platform2"]
+shape = SubResource("Shape_plat_small")
+[node name="Visual" type="Polygon2D" parent="World/Platform2"]
+color = Color(0.32, 0.24, 0.14, 1)
+polygon = PackedVector2Array(-90.0, -10.0, 90.0, -10.0, 90.0, 10.0, -90.0, 10.0)
+
+[node name="Platform3" type="StaticBody2D" parent="World"]
+position = Vector2(920, 460)
+[node name="CollisionShape2D" type="CollisionShape2D" parent="World/Platform3"]
+shape = SubResource("Shape_plat_small")
+[node name="Visual" type="Polygon2D" parent="World/Platform3"]
+color = Color(0.32, 0.24, 0.14, 1)
+polygon = PackedVector2Array(-90.0, -10.0, 90.0, -10.0, 90.0, 10.0, -90.0, 10.0)
+
+[node name="Platform4" type="StaticBody2D" parent="World"]
+position = Vector2(1200, 380)
+[node name="CollisionShape2D" type="CollisionShape2D" parent="World/Platform4"]
+shape = SubResource("Shape_plat_small")
+[node name="Visual" type="Polygon2D" parent="World/Platform4"]
+color = Color(0.32, 0.24, 0.14, 1)
+polygon = PackedVector2Array(-90.0, -10.0, 90.0, -10.0, 90.0, 10.0, -90.0, 10.0)
+
+[node name="Platform5" type="StaticBody2D" parent="World"]
+position = Vector2(1500, 520)
+[node name="CollisionShape2D" type="CollisionShape2D" parent="World/Platform5"]
+shape = SubResource("Shape_plat_long")
+[node name="Visual" type="Polygon2D" parent="World/Platform5"]
+color = Color(0.32, 0.24, 0.14, 1)
+polygon = PackedVector2Array(-160.0, -10.0, 160.0, -10.0, 160.0, 10.0, -160.0, 10.0)
+
+[node name="Platform6" type="StaticBody2D" parent="World"]
+position = Vector2(1760, 420)
+[node name="CollisionShape2D" type="CollisionShape2D" parent="World/Platform6"]
+shape = SubResource("Shape_plat_small")
+[node name="Visual" type="Polygon2D" parent="World/Platform6"]
+color = Color(0.32, 0.24, 0.14, 1)
+polygon = PackedVector2Array(-90.0, -10.0, 90.0, -10.0, 90.0, 10.0, -90.0, 10.0)
+
+[node name="Platform7" type="StaticBody2D" parent="World"]
+position = Vector2(2100, 560)
+[node name="CollisionShape2D" type="CollisionShape2D" parent="World/Platform7"]
+shape = SubResource("Shape_plat_long")
+[node name="Visual" type="Polygon2D" parent="World/Platform7"]
+color = Color(0.32, 0.24, 0.14, 1)
+polygon = PackedVector2Array(-160.0, -10.0, 160.0, -10.0, 160.0, 10.0, -160.0, 10.0)
+
+[node name="Platform8" type="StaticBody2D" parent="World"]
+position = Vector2(2400, 460)
+[node name="CollisionShape2D" type="CollisionShape2D" parent="World/Platform8"]
+shape = SubResource("Shape_plat_small")
+[node name="Visual" type="Polygon2D" parent="World/Platform8"]
+color = Color(0.32, 0.24, 0.14, 1)
+polygon = PackedVector2Array(-90.0, -10.0, 90.0, -10.0, 90.0, 10.0, -90.0, 10.0)
+
+[node name="Platform9" type="StaticBody2D" parent="World"]
+position = Vector2(2700, 520)
+[node name="CollisionShape2D" type="CollisionShape2D" parent="World/Platform9"]
+shape = SubResource("Shape_plat_med")
+[node name="Visual" type="Polygon2D" parent="World/Platform9"]
+color = Color(0.32, 0.24, 0.14, 1)
+polygon = PackedVector2Array(-120.0, -10.0, 120.0, -10.0, 120.0, 10.0, -120.0, 10.0)
+
+[node name="Platform10" type="StaticBody2D" parent="World"]
+position = Vector2(3000, 420)
+[node name="CollisionShape2D" type="CollisionShape2D" parent="World/Platform10"]
+shape = SubResource("Shape_plat_med")
+[node name="Visual" type="Polygon2D" parent="World/Platform10"]
+color = Color(0.32, 0.24, 0.14, 1)
+polygon = PackedVector2Array(-120.0, -10.0, 120.0, -10.0, 120.0, 10.0, -120.0, 10.0)
+
+[node name="MovingPlatform1" type="AnimatableBody2D" parent="World"]
+position = Vector2(2000, 520)
+script = ExtResource("7_moveplat")
+move_offset = Vector2(0, -160)
+move_duration = 2.4
+[node name="CollisionShape2D" type="CollisionShape2D" parent="World/MovingPlatform1"]
+shape = SubResource("Shape_plat_move")
+[node name="Visual" type="Polygon2D" parent="World/MovingPlatform1"]
+color = Color(0.26, 0.22, 0.36, 1)
+polygon = PackedVector2Array(-90.0, -10.0, 90.0, -10.0, 90.0, 10.0, -90.0, 10.0)
+
+[node name="Spikes1" type="Area2D" parent="World"]
+position = Vector2(1100, 690)
+script = ExtResource("5_hazard")
+[node name="CollisionShape2D" type="CollisionShape2D" parent="World/Spikes1"]
+shape = SubResource("Shape_hazard")
+[node name="Sprite" type="Sprite2D" parent="World/Spikes1"]
+texture = ExtResource("9_spikes")
+scale = Vector2(0.5, 0.5)
+
+[node name="Spikes2" type="Area2D" parent="World"]
+position = Vector2(2200, 690)
+script = ExtResource("5_hazard")
+[node name="CollisionShape2D" type="CollisionShape2D" parent="World/Spikes2"]
+shape = SubResource("Shape_hazard")
+[node name="Sprite" type="Sprite2D" parent="World/Spikes2"]
+texture = ExtResource("9_spikes")
+scale = Vector2(0.5, 0.5)
+
+[node name="Collectibles" type="Node2D" parent="World"]
+
+[node name="Token1" type="Area2D" parent="World/Collectibles"]
+position = Vector2(640, 500)
+script = ExtResource("6_collectible")
+[node name="CollisionShape2D" type="CollisionShape2D" parent="World/Collectibles/Token1"]
+shape = SubResource("Shape_collectible")
+[node name="Sprite" type="Sprite2D" parent="World/Collectibles/Token1"]
+texture = ExtResource("10_coin")
+scale = Vector2(0.6, 0.6)
+
+[node name="Token2" type="Area2D" parent="World/Collectibles"]
+position = Vector2(920, 420)
+script = ExtResource("6_collectible")
+[node name="CollisionShape2D" type="CollisionShape2D" parent="World/Collectibles/Token2"]
+shape = SubResource("Shape_collectible")
+[node name="Sprite" type="Sprite2D" parent="World/Collectibles/Token2"]
+texture = ExtResource("10_coin")
+scale = Vector2(0.6, 0.6)
+
+[node name="Token3" type="Area2D" parent="World/Collectibles"]
+position = Vector2(1500, 480)
+script = ExtResource("6_collectible")
+[node name="CollisionShape2D" type="CollisionShape2D" parent="World/Collectibles/Token3"]
+shape = SubResource("Shape_collectible")
+[node name="Sprite" type="Sprite2D" parent="World/Collectibles/Token3"]
+texture = ExtResource("10_coin")
+scale = Vector2(0.6, 0.6)
+
+[node name="Token4" type="Area2D" parent="World/Collectibles"]
+position = Vector2(2100, 520)
+script = ExtResource("6_collectible")
+[node name="CollisionShape2D" type="CollisionShape2D" parent="World/Collectibles/Token4"]
+shape = SubResource("Shape_collectible")
+[node name="Sprite" type="Sprite2D" parent="World/Collectibles/Token4"]
+texture = ExtResource("10_coin")
+scale = Vector2(0.6, 0.6)
+
+[node name="Token5" type="Area2D" parent="World/Collectibles"]
+position = Vector2(2700, 480)
+script = ExtResource("6_collectible")
+[node name="CollisionShape2D" type="CollisionShape2D" parent="World/Collectibles/Token5"]
+shape = SubResource("Shape_collectible")
+[node name="Sprite" type="Sprite2D" parent="World/Collectibles/Token5"]
+texture = ExtResource("10_coin")
+scale = Vector2(0.6, 0.6)
+
+[node name="Token6" type="Area2D" parent="World/Collectibles"]
+position = Vector2(3000, 380)
+script = ExtResource("6_collectible")
+value = 10
+[node name="CollisionShape2D" type="CollisionShape2D" parent="World/Collectibles/Token6"]
+shape = SubResource("Shape_collectible")
+[node name="Sprite" type="Sprite2D" parent="World/Collectibles/Token6"]
+texture = ExtResource("10_coin")
+scale = Vector2(0.6, 0.6)
+
+[node name="Hoop" parent="." instance=ExtResource("2_hoop")]
+position = Vector2(3040, 420)
+next_level = "res://scenes/level_4.tscn"
+
+[node name="Player" parent="." instance=ExtResource("1_player")]
+position = Vector2(120, 688)
+scale = Vector2(3, 3)
+
+[node name="Ball1" parent="." instance=ExtResource("3_basketball")]
+position = Vector2(200, 640)
+
+[node name="Ball2" parent="." instance=ExtResource("3_basketball")]
+position = Vector2(1200, 420)
+
+[node name="Ball3" parent="." instance=ExtResource("3_basketball")]
+position = Vector2(2200, 620)
+
+[node name="HUD" type="CanvasLayer" parent="."]
+[node name="LevelTitle" type="Label" parent="HUD"]
+offset_left = 24.0
+offset_top = 16.0
+offset_right = 640.0
+offset_bottom = 48.0
+theme_override_font_sizes/font_size = 26
+text = "WORLD 1-3  |  SKY BRIDGES"
+[node name="HintShoot" type="Label" parent="HUD"]
+offset_left = 24.0
+offset_top = 52.0
+offset_right = 800.0
+offset_bottom = 80.0
+theme_override_font_sizes/font_size = 18
+text = "Long gaps and narrow landings. Keep your momentum."
+[node name="HintGoal" type="Label" parent="HUD"]
+offset_left = 24.0
+offset_top = 76.0
+offset_right = 800.0
+offset_bottom = 104.0
+theme_override_font_sizes/font_size = 18
+text = "A clean shot at the end unlocks the exit."
+[node name="ScoreLabel" type="Label" parent="HUD"]
+offset_left = 980.0
+offset_top = 16.0
+offset_right = 1240.0
+offset_bottom = 40.0
+theme_override_font_sizes/font_size = 20
+horizontal_alignment = 2
+text = "Score: 0"
+[node name="TimerLabel" type="Label" parent="HUD"]
+offset_left = 980.0
+offset_top = 40.0
+offset_right = 1240.0
+offset_bottom = 64.0
+theme_override_font_sizes/font_size = 20
+horizontal_alignment = 2
+text = "Time: 110"
