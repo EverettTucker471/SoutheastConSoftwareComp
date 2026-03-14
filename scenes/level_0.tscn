@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://level000"]
 
 [ext_resource type="PackedScene" uid="uid://player001" path="res://scenes/player.tscn" id="1_player"]
+[ext_resource type="Script" uid="uid://kqeoo7588eve" path="res://scripts/level_0.gd" id="1_xp8tn"]
 [ext_resource type="PackedScene" uid="uid://hoop001" path="res://scenes/hoop.tscn" id="2_hoop"]
 [ext_resource type="PackedScene" uid="uid://basketball001" path="res://scenes/basketball.tscn" id="3_basketball"]
 [ext_resource type="Script" uid="uid://dmyg2fu7tjelh" path="res://scripts/collectible.gd" id="5_collectible"]
@@ -29,6 +30,10 @@ size = Vector2(220, 20)
 
 [sub_resource type="RectangleShape2D" id="Shape_plat_small"]
 size = Vector2(160, 20)
+
+[node name="Level0" type="Node2D" unique_id=115407023]
+process_mode = 3
+script = ExtResource("1_xp8tn")
 
 [sub_resource type="RectangleShape2D" id="Shape_block"]
 size = Vector2(60, 20)
@@ -575,3 +580,29 @@ offset_bottom = 64.0
 theme_override_font_sizes/font_size = 20
 text = "Time: 120"
 horizontal_alignment = 2
+[node name="TransitionHitbox" type="CollisionShape2D" parent="LevelTransition" unique_id=1543723965]
+position = Vector2(640, -54.5)
+shape = SubResource("RectangleShape2D_jv3i5")
+
+[node name="StartScreen" type="CanvasLayer" parent="." unique_id=1296460359]
+
+[node name="ColorRect" type="ColorRect" parent="StartScreen" unique_id=1328515937]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0.5882353)
+
+[node name="Label" type="Label" parent="StartScreen" unique_id=1651492224]
+offset_left = 290.0
+offset_top = 312.0
+offset_right = 995.0
+offset_bottom = 439.0
+text = "Welcome to Space Jam: Trick Shot Savior!
+Lebron James has been kidnapped by Daffy Duck, and needs your help!
+Play as Bugs Bunny and use your Toon Squad Trick Shots to defeat Daffy and rescue Lebron
+Good Luck! Press SPACE to begin...
+"
+horizontal_alignment = 1
+vertical_alignment = 1
