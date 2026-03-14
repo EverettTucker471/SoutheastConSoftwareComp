@@ -94,6 +94,7 @@ offset_bottom = 15.0
 text = "●"
 
 [node name="PlayerSprite" type="AnimatedSprite2D" parent="." unique_id=318809386]
+position = Vector2(-8, 0)
 sprite_frames = SubResource("SpriteFrames_ur7pv")
 animation = &"shooting"
 
