@@ -5,6 +5,7 @@
 [ext_resource type="PackedScene" uid="uid://basketball001" path="res://scenes/basketball.tscn" id="3_basketball"]
 [ext_resource type="PackedScene" uid="uid://elevator001" path="res://scenes/elevator.tscn" id="4_elevator"]
 [ext_resource type="PackedScene" uid="uid://ga3sc5j4g8u6" path="res://scenes/boss.tscn" id="6_xp8tn"]
+[ext_resource type="Script" path="res://scripts/level_transition.gd" id="7_qjcqe"]
 [ext_resource type="Script" uid="uid://db30oj10lk31p" path="res://scripts/elevator.gd" id="7_rhhhf"]
 
 [sub_resource type="RectangleShape2D" id="Shape_floor"]
@@ -15,6 +16,9 @@ size = Vector2(40, 800)
 
 [sub_resource type="RectangleShape2D" id="Shape_rwall"]
 size = Vector2(40, 800)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_jv3i5"]
+size = Vector2(1280, 41)
 
 [node name="Level0" type="Node2D" unique_id=115407023]
 
@@ -82,3 +86,11 @@ script = ExtResource("7_rhhhf")
 position = Vector2(250, 575)
 scale = Vector2(5, 5)
 basketball_scene = ExtResource("3_basketball")
+
+[node name="LevelTransition" type="Area2D" parent="." unique_id=1028068281]
+script = ExtResource("7_qjcqe")
+next_scene_path = "uid://level001"
+
+[node name="TransitionHitbox" type="CollisionShape2D" parent="LevelTransition" unique_id=1543723965]
+position = Vector2(640, -54.5)
+shape = SubResource("RectangleShape2D_jv3i5")
