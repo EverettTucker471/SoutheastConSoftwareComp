@@ -4,7 +4,13 @@
 [ext_resource type="PackedScene" uid="uid://basketball001" path="res://scenes/basketball.tscn" id="3_basketball"]
 [ext_resource type="Script" uid="uid://bxxucvjhfiiga" path="res://scripts/level_1.gd" id="4_level"]
 [ext_resource type="Script" uid="uid://c5uggge3p4y7x" path="res://scripts/basketball.gd" id="5_4nkto"]
-[ext_resource type="Script" uid="uid://p4e2gikrhelm" path="res://scripts/breakable_wall.gd" id="5_bwall"]
+[ext_resource type="Texture2D" path="res://Platformer Art Complete Pack/Base pack/Items/spikes.png" id="9_spikes"]
+[ext_resource type="Texture2D" path="res://Platformer Art Complete Pack/Base pack/Items/coinGold.png" id="10_coin"]
+[ext_resource type="PackedScene" uid="uid://breakablewall001" path="res://scenes/breakable_wall.tscn" id="20_bwall_scene"]
+[ext_resource type="Texture2D" path="res://Platformer Art Complete Pack/Base pack/bg.png" id="12_bg"]
+
+
+
 
 [sub_resource type="RectangleShape2D" id="Shape_floor"]
 size = Vector2(1280, 40)
@@ -76,7 +82,7 @@ _bundled = {
 [node name="Level1" type="Node2D" unique_id=1973090281]
 position = Vector2(1, 0)
 script = ExtResource("4_level")
-next_scene_path = "uid://d2ipjlpmnprvm"
+next_scene_path = "res://scenes/level_2.tscn"
 
 [node name="World" type="Node2D" parent="." unique_id=1055961990]
 
@@ -148,34 +154,8 @@ shape = SubResource("Shape_platB")
 color = Color(0.32, 0.24, 0.14, 1)
 polygon = PackedVector2Array(-210, -10, 210, -10, 210, 10, -210, 10)
 
-[node name="BreakableWall" type="StaticBody2D" parent="World" unique_id=1464594667]
+[node name="BreakableWall" parent="World" instance=ExtResource("20_bwall_scene")]
 position = Vector2(868, 361)
-collision_layer = 5
-collision_mask = 4
-script = ExtResource("5_bwall")
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="World/BreakableWall" unique_id=2105421920]
-shape = SubResource("Shape_bwall")
-
-[node name="Visual" type="Polygon2D" parent="World/BreakableWall" unique_id=1572278492]
-color = Color(0.85, 0.42, 0.08, 1)
-polygon = PackedVector2Array(-10, -61, 10, -61, 10, 61, -10, 61)
-
-[node name="HintLabel" type="Label" parent="World/BreakableWall" unique_id=1841145939]
-modulate = Color(1, 0.9, 0.3, 1)
-offset_left = -52.0
-offset_top = -85.0
-offset_right = -52.0
-offset_bottom = -85.0
-text = "🔴 RED ONLY"
-
-[node name="BallDetector" type="Area2D" parent="World/BreakableWall" unique_id=277327027]
-collision_layer = 0
-collision_mask = 4
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="World/BreakableWall/BallDetector" unique_id=1840294179]
-shape = SubResource("Shape_bwall_detector")
-
 [node name="RoomFloor" type="StaticBody2D" parent="World" unique_id=650439940]
 position = Vector2(989, 430)
 
@@ -256,11 +236,11 @@ shape = SubResource("Shape_goal_area")
 
 [node name="WinScreen" type="CanvasLayer" parent="." unique_id=2136457460]
 
-[node name="Background" type="ColorRect" parent="WinScreen" unique_id=1683120061]
-offset_right = 1280.0
-offset_bottom = 720.0
-color = Color(0, 0, 0, 0.78)
-
+[node name="Background" type="Sprite2D" parent="World"]
+texture = ExtResource("12_bg")
+centered = false
+position = Vector2(0, 0)
+scale = Vector2(5.0000, 2.5391)
 [node name="WinLabel" type="Label" parent="WinScreen" unique_id=1250029806]
 offset_left = 340.0
 offset_top = 260.0

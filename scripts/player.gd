@@ -10,11 +10,16 @@ const GRAVITY := 980.0
 @onready var shoot_point: Marker2D = $ShootPoint
 @onready var sprite: AnimatedSprite2D = $PlayerSprite
 @onready var _ball_indicator: Label = $BallIndicator
+@onready var _health_label: Label = $HealthLabel
+@onready var _game_over_layer: CanvasLayer = $GameOver
+@onready var _game_over_label: Label = $GameOver/GameOverLabel
+@onready var _camera: Camera2D = $Camera2D
 
 var last_direction := Vector2(1.0, 0.0)
 var _has_ball := true
 var _can_shoot := true
 const SHOOT_COOLDOWN := 0.4
+var _dead := false
 
 # Powershot charge
 var _charging := false
@@ -28,8 +33,24 @@ const POWER_COLORS := [
 	Color(0.90, 0.10, 0.10), # red
 ]
 
+signal health_changed(current: int, max: int)
+signal died
+
+@export var max_health := 10
+var health := 10
+
+
+func _ready() -> void:
+	health = max_health
+	_update_health_label()
+	_game_over_layer.visible = false
+
 
 func _physics_process(delta: float) -> void:
+	if _dead:
+		velocity = Vector2.ZERO
+		move_and_slide()
+		return
 	_apply_gravity(delta)
 	_handle_jump()
 	_handle_movement()
@@ -38,6 +59,8 @@ func _physics_process(delta: float) -> void:
 
 
 func _process(delta: float) -> void:
+	if _dead:
+		return
 	if _charging:
 		_charge_time += delta
 		_ball_indicator.modulate = POWER_COLORS[_get_charge_level()]
@@ -91,6 +114,10 @@ func _handle_movement() -> void:
 
 
 func _input(event: InputEvent) -> void:
+	if _dead:
+		if event.is_action_pressed("restart"):
+			get_tree().reload_current_scene()
+		return
 	# Start charging on press.
 	if event.is_action_pressed("shoot") and not event.is_echo() and _has_ball and _can_shoot:
 		_charging = true
@@ -164,3 +191,41 @@ func _on_ball_picked_up() -> void:
 # Called by the Basketball when the player lands on it.
 func bounce_off_ball(boost: float) -> void:
 	velocity.y = boost
+
+
+func take_damage(amount: int = 1) -> void:
+	if amount <= 0:
+		return
+	health = max(health - amount, 0)
+	_update_health_label()
+	health_changed.emit(health, max_health)
+	if health == 0:
+		_dead = true
+		_show_game_over()
+		died.emit()
+
+
+func heal(amount: int = 1) -> void:
+	if amount <= 0:
+		return
+	health = min(health + amount, max_health)
+	_update_health_label()
+	health_changed.emit(health, max_health)
+
+
+func _update_health_label() -> void:
+	_health_label.text = "HP: %d/%d" % [health, max_health]
+
+
+func _show_game_over() -> void:
+	_game_over_label.text = "GAME OVER\nPress R to Restart"
+	_game_over_layer.visible = true
+
+
+func set_camera_limits(left: int, top: int, right: int, bottom: int) -> void:
+	if _camera == null:
+		return
+	_camera.limit_left = left
+	_camera.limit_top = top
+	_camera.limit_right = right
+	_camera.limit_bottom = bottom

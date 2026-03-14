@@ -42,4 +42,4 @@ func _on_lebron_reached() -> void:
 func _input(event: InputEvent) -> void:
 	# Restart the game if they won and press the accept button
 	if _is_game_won and event.is_action_pressed("ui_accept"):
-		get_tree().change_scene_to_file("res://scenes/level_0.tscn")
+		get_tree().change_scene_to_file("res://scenes/level_3.tscn")

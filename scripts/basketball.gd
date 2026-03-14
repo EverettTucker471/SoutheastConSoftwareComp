@@ -90,6 +90,9 @@ func _process(delta: float) -> void:
 func _on_body_entered_contact(body: Node) -> void:
 	if body.is_in_group("player") or _immune_player != null:
 		return
+	# Don't degrade power when hitting a breakable wall so red shots can trigger it.
+	if body.is_in_group("breakable_wall"):
+		return
 	# Breakable wall handles its own destruction via its Area2D detector.
 	# Normal collision: degrade power level by one step.
 	if _collision_cooldown > 0.0 or power_level == 0:
