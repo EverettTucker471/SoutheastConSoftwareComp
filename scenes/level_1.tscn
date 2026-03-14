@@ -49,6 +49,7 @@ size = Vector2(520, 100)
 
 [node name="Level1" type="Node2D" unique_id=1973090281]
 script = ExtResource("4_level")
+next_scene_path = "uid://d2ipjlpmnprvm"
 
 [node name="World" type="Node2D" parent="." unique_id=1055961990]
 
@@ -250,6 +251,6 @@ text = "Press R to restart"
 horizontal_alignment = 1
 
 [node name="Player" parent="." unique_id=1554639981 instance=ExtResource("1_player")]
-position = Vector2(200, 688)
+position = Vector2(208.00002, 688)
 scale = Vector2(3, 3)
 basketball_scene = ExtResource("3_basketball")
