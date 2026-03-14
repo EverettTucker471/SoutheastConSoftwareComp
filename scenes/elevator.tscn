@@ -1,0 +1,35 @@
+[gd_scene format=3 uid="uid://elevator001"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_uijja"]
+size = Vector2(171.25, 30.75)
+
+[sub_resource type="Gradient" id="Gradient_phsah"]
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_8o2wm"]
+gradient = SubResource("Gradient_phsah")
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_5nv5w"]
+size = Vector2(168, 14.5)
+
+[sub_resource type="Gradient" id="Gradient_8lbij"]
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_jmdsd"]
+gradient = SubResource("Gradient_8lbij")
+
+[node name="Elevator" type="AnimatableBody2D" unique_id=574230044]
+
+[node name="ElevatorShape" type="CollisionShape2D" parent="." unique_id=1336212836]
+position = Vector2(639, 701)
+shape = SubResource("RectangleShape2D_uijja")
+
+[node name="ElevatorTexture" type="Sprite2D" parent="ElevatorShape" unique_id=1293554105]
+texture = SubResource("GradientTexture1D_8o2wm")
+
+[node name="TriggerPlate" type="Area2D" parent="." unique_id=1168406076]
+
+[node name="TriggerPlateShape" type="CollisionShape2D" parent="TriggerPlate" unique_id=1779333045]
+position = Vector2(638, 677.25)
+shape = SubResource("RectangleShape2D_5nv5w")
+
+[node name="TriggerPlateTexture" type="Sprite2D" parent="TriggerPlate/TriggerPlateShape" unique_id=841341045]
+texture = SubResource("GradientTexture1D_jmdsd")

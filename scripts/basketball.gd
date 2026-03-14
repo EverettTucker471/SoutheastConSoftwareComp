@@ -7,10 +7,10 @@ const BALL_BOUNCE_BOOST := -650.0
 
 # Power level: 0=green (slowest) … 3=red (fastest)
 const POWER_COLORS := [
-	Color(0.18, 0.85, 0.18),   # green
-	Color(0.95, 0.85, 0.08),   # yellow
-	Color(0.95, 0.48, 0.05),   # orange
-	Color(0.90, 0.10, 0.10),   # red
+	Color(0.18, 0.85, 0.18), # green
+	Color(0.95, 0.85, 0.08), # yellow
+	Color(0.95, 0.48, 0.05), # orange
+	Color(0.90, 0.10, 0.10), # red
 ]
 
 var power_level := 0
@@ -111,4 +111,4 @@ func _on_player_detector_body_entered(body: Node) -> void:
 
 
 func _on_player_detector_body_exited(body: Node) -> void:
-	pass  # Reserved for future use.
+	pass # Reserved for future use.

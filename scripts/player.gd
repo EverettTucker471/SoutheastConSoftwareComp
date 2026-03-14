@@ -19,13 +19,13 @@ const SHOOT_COOLDOWN := 0.4
 # Powershot charge
 var _charging := false
 var _charge_time := 0.0
-const CHARGE_THRESHOLDS := [0.0, 0.3, 0.6, 0.9]  # seconds to reach each level
-const POWER_SPEEDS    := [420.0, 640.0, 900.0, 1400.0]
-const POWER_COLORS    := [
-	Color(0.18, 0.85, 0.18),  # green
-	Color(0.95, 0.85, 0.08),  # yellow
-	Color(0.95, 0.48, 0.05),  # orange
-	Color(0.90, 0.10, 0.10),  # red
+const CHARGE_THRESHOLDS := [0.0, 0.3, 0.6, 0.9] # seconds to reach each level
+const POWER_SPEEDS := [420.0, 640.0, 900.0, 1400.0]
+const POWER_COLORS := [
+	Color(0.18, 0.85, 0.18), # green
+	Color(0.95, 0.85, 0.08), # yellow
+	Color(0.95, 0.48, 0.05), # orange
+	Color(0.90, 0.10, 0.10), # red
 ]
 
 
@@ -126,7 +126,7 @@ func _shoot_basketball() -> void:
 	# so Area2D detectors (e.g. breakable wall) can still see the ball.
 	set_collision_mask_value(3, false)
 	ball.immunity_ended.connect(func(): set_collision_mask_value(3, true), CONNECT_ONE_SHOT)
-	ball.set_immune(self, 0.3)
+	ball.set_immune(self , 0.3)
 	ball.picked_up.connect(_on_ball_picked_up)
 
 	_has_ball = false
